@@ -112,10 +112,13 @@ export class Duration {
   public readonly hour: number;
   public readonly minute: number;
   public readonly second: number;
+  public readonly timestamp: number;
 
-  public constructor(public readonly timestamp: number) {
-    const value = Math.abs(timestamp);
-    this.sign = timestamp === 0 ? 0 : timestamp < 0 ? -1 : 1;
+  public constructor(time: number | Duration) {
+    this.timestamp = typeof time === "number" ? time : time.timestamp;
+    this.sign = this.timestamp === 0 ? 0 : this.timestamp < 0 ? -1 : 1;
+
+    const value = Math.abs(this.timestamp);
     this.week = Math.floor(value / Duration.SECONDS_IN_WEEK) * this.sign;
     this.day =
       Math.floor((value % Duration.SECONDS_IN_WEEK) / Duration.SECONDS_IN_DAY) *
@@ -130,12 +133,14 @@ export class Duration {
     this.second = Math.floor(value % Duration.SECONDS_IN_MINUTE) * this.sign;
   }
 
-  public backward(time: Duration): Duration {
-    return new Duration(this.timestamp - time.timestamp);
+  public backward(time: number | Duration): Duration {
+    const timestamp = typeof time === "number" ? time : time.timestamp;
+    return new Duration(this.timestamp - timestamp);
   }
 
-  public forward(time: Duration): Duration {
-    return new Duration(this.timestamp + time.timestamp);
+  public forward(time: number | Duration): Duration {
+    const timestamp = typeof time === "number" ? time : time.timestamp;
+    return new Duration(this.timestamp + timestamp);
   }
 
   public setWeek(week: number): Duration {
