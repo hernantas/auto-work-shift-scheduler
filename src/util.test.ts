@@ -1,7 +1,7 @@
 import { expect } from "@std/expect";
 import { getCircularNumber, zeroPad } from "./util.ts";
 
-Deno.test("'getCircularNumber' within range should return same value", () => {
+Deno.test("`getCircularNumber` within range should return same value", () => {
   const valueMin = getCircularNumber(0, 10);
   const valueRange = getCircularNumber(5, 10);
   const valueMax = getCircularNumber(9, 10);
@@ -11,7 +11,7 @@ Deno.test("'getCircularNumber' within range should return same value", () => {
 });
 
 Deno.test(
-  "'getCircularNumber' outside minimum range should wrap around",
+  "`getCircularNumber` outside minimum range should wrap around",
   () => {
     const value1 = getCircularNumber(-5, 10);
     const value2 = getCircularNumber(-15, 10);
@@ -21,7 +21,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'getCircularNumber' outside maximum range should wrap around",
+  "`getCircularNumber` outside maximum range should wrap around",
   () => {
     const value1 = getCircularNumber(15, 10);
     const value2 = getCircularNumber(25, 10);
@@ -31,7 +31,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'zeroPad' should not modify output value if length is not set",
+  "`zeroPad` should not modify output value if length is not set",
   () => {
     const value = zeroPad(123);
     expect(value).toBe("123");
@@ -39,7 +39,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'zeroPad' should not modify output value if length is less than value length",
+  "`zeroPad` should not modify output value if length is less than value length",
   () => {
     const value = zeroPad(123, 2);
     expect(value).toBe("123");
@@ -47,7 +47,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'zeroPad' should pad zero to the output value if length is more than value length",
+  "`zeroPad` should pad zero to the output value if length is more than value length",
   () => {
     const value = zeroPad(123, 5);
     expect(value).toBe("00123");

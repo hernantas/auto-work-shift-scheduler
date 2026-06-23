@@ -1,7 +1,7 @@
 import { expect } from "@std/expect";
 import { Day, Duration } from "./time.ts";
 
-Deno.test("'Day.get' should return the correct day", () => {
+Deno.test("`Day.get` should return the correct day", () => {
   const firstDay = Day.get(0);
   const lastDay = Day.get(6);
   const outsideBeforeDay = Day.get(-4);
@@ -17,7 +17,7 @@ Deno.test("'Day.get' should return the correct day", () => {
   expect(outsideBeforeDay.name).toBe(Day.names[3]);
 });
 
-Deno.test("'Day.forward' should add the correct day", () => {
+Deno.test("`Day.forward` should add the correct day", () => {
   const currentDay = Day.get(0);
   const forwardDay = currentDay.forward(3);
   const forwardCircularDay = currentDay.forward(10);
@@ -26,7 +26,7 @@ Deno.test("'Day.forward' should add the correct day", () => {
   expect(Day.get(3).equals(forwardCircularDay)).toBe(true);
 });
 
-Deno.test("'Day.backward' should subtract the correct day", () => {
+Deno.test("`Day.backward` should subtract the correct day", () => {
   const currentDay = Day.get(6);
   const backwardDay = currentDay.backward(3);
   const backwardCircularDay = currentDay.backward(10);
@@ -35,7 +35,7 @@ Deno.test("'Day.backward' should subtract the correct day", () => {
   expect(Day.get(3).equals(backwardCircularDay)).toBe(true);
 });
 
-Deno.test("'Day.before' should compare days correctly", () => {
+Deno.test("`Day.before` should compare days correctly", () => {
   const firstDay = Day.get(0);
   const middleDay = Day.get(3);
   const lastDay = Day.get(6);
@@ -51,7 +51,7 @@ Deno.test("'Day.before' should compare days correctly", () => {
   expect(lastDay.before(middleDay)).toBe(false);
 });
 
-Deno.test("'Day.equals' should compare days correctly", () => {
+Deno.test("`Day.equals` should compare days correctly", () => {
   const firstDay = Day.get(0);
   const middleDay = Day.get(3);
   const lastDay = Day.get(6);
@@ -67,7 +67,7 @@ Deno.test("'Day.equals' should compare days correctly", () => {
   expect(lastDay.equals(lastDay)).toBe(true);
 });
 
-Deno.test("'Day.after' should compare days correctly", () => {
+Deno.test("`Day.after` should compare days correctly", () => {
   const firstDay = Day.get(0);
   const middleDay = Day.get(3);
   const lastDay = Day.get(6);
@@ -83,7 +83,7 @@ Deno.test("'Day.after' should compare days correctly", () => {
   expect(lastDay.after(lastDay)).toBe(false);
 });
 
-Deno.test("'Duration' constants should be set correctly", () => {
+Deno.test("`Duration` constants should be set correctly", () => {
   expect(Duration.DAY_IN_WEEK).toBe(7);
   expect(Duration.HOUR_IN_DAY).toBe(24);
   expect(Duration.HOUR_IN_WEEK).toBe(7 * 24);
@@ -97,7 +97,7 @@ Deno.test("'Duration' constants should be set correctly", () => {
 });
 
 Deno.test(
-  "'Duration.fromSecond' should return the correct positive time when set with positive value",
+  "`Duration.fromSecond` should return the correct positive time when set with positive value",
   () => {
     const firstSecond = Duration.fromSecond(1);
     const lastSecond = Duration.fromSecond(59);
@@ -122,7 +122,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromSecond' should return the correct negative time when set with negative value",
+  "`Duration.fromSecond` should return the correct negative time when set with negative value",
   () => {
     const firstSecond = Duration.fromSecond(-1);
     const lastSecond = Duration.fromSecond(-59);
@@ -147,7 +147,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromMinute' should return the correct positive time when set with positive value",
+  "`Duration.fromMinute` should return the correct positive time when set with positive value",
   () => {
     const firstMinute = Duration.fromMinute(1);
     const lastMinute = Duration.fromMinute(59);
@@ -172,7 +172,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromMinute' should return the correct negative time when set with negative value",
+  "`Duration.fromMinute` should return the correct negative time when set with negative value",
   () => {
     const firstMinute = Duration.fromMinute(-1);
     const lastMinute = Duration.fromMinute(-59);
@@ -197,7 +197,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromHour' should return the correct positive time when set with positive value",
+  "`Duration.fromHour` should return the correct positive time when set with positive value",
   () => {
     const firstHour = Duration.fromHour(1);
     const lastHour = Duration.fromHour(23);
@@ -222,7 +222,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromHour' should return the correct negative time when set with negative value",
+  "`Duration.fromHour` should return the correct negative time when set with negative value",
   () => {
     const firstHour = Duration.fromHour(-1);
     const lastHour = Duration.fromHour(-23);
@@ -247,7 +247,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromDay' should return the correct positive time when set with positive value",
+  "`Duration.fromDay` should return the correct positive time when set with positive value",
   () => {
     const firstDay = Duration.fromDay(1);
     const lastDay = Duration.fromDay(6);
@@ -272,7 +272,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromDay' should return the correct negative time when set with negative value",
+  "`Duration.fromDay` should return the correct negative time when set with negative value",
   () => {
     const firstDay = Duration.fromDay(-1);
     const lastDay = Duration.fromDay(-6);
@@ -297,7 +297,7 @@ Deno.test(
 );
 
 Deno.test(
-  "'Duration.fromWeek' should return the correct time when set with value",
+  "`Duration.fromWeek` should return the correct time when set with value",
   () => {
     const positiveWeek = Duration.fromWeek(1);
     const negativeWeek = Duration.fromWeek(-1);
@@ -315,7 +315,7 @@ Deno.test(
   },
 );
 
-Deno.test("'Duration.before' should compare two durations correctly", () => {
+Deno.test("`Duration.before` should compare two durations correctly", () => {
   const firstDuration = new Duration(10);
   const secondDuration = new Duration(20);
   const thirdDuration = new Duration(30);
@@ -330,7 +330,7 @@ Deno.test("'Duration.before' should compare two durations correctly", () => {
   expect(thirdDuration.before(thirdDuration)).toBe(false);
 });
 
-Deno.test("'Duration.equals' should compare two durations correctly", () => {
+Deno.test("`Duration.equals` should compare two durations correctly", () => {
   const firstDuration = new Duration(10);
   const secondDuration = new Duration(20);
   const thirdDuration = new Duration(30);
@@ -345,7 +345,7 @@ Deno.test("'Duration.equals' should compare two durations correctly", () => {
   expect(thirdDuration.equals(thirdDuration)).toBe(true);
 });
 
-Deno.test("'Duration.after' should compare two durations correctly", () => {
+Deno.test("`Duration.after` should compare two durations correctly", () => {
   const firstDuration = new Duration(10);
   const secondDuration = new Duration(20);
   const thirdDuration = new Duration(30);
@@ -360,7 +360,7 @@ Deno.test("'Duration.after' should compare two durations correctly", () => {
   expect(thirdDuration.after(thirdDuration)).toBe(false);
 });
 
-Deno.test("'Duration.forward' should add two durations correctly", () => {
+Deno.test("`Duration.forward` should add two durations correctly", () => {
   const forwardSecond = Duration.origin.forward(Duration.fromSecond(1));
   const forwardMinute = Duration.origin.forward(Duration.fromMinute(1));
   const forwardHour = Duration.origin.forward(Duration.fromHour(1));
@@ -394,7 +394,7 @@ Deno.test("'Duration.forward' should add two durations correctly", () => {
   expect(forwardWeek.week).toBe(1);
 });
 
-Deno.test("'Duration.backward' should add two durations correctly", () => {
+Deno.test("`Duration.backward` should add two durations correctly", () => {
   const backwardSecond = Duration.origin.backward(Duration.fromSecond(1));
   const backwardMinute = Duration.origin.backward(Duration.fromMinute(1));
   const backwardHour = Duration.origin.backward(Duration.fromHour(1));
@@ -428,7 +428,7 @@ Deno.test("'Duration.backward' should add two durations correctly", () => {
   expect(backwardWeek.week).toEqual(-1);
 });
 
-Deno.test("'Duration.setWeek' should only set the week correctly", () => {
+Deno.test("`Duration.setWeek` should only set the week correctly", () => {
   const duration = Duration.from(1, 1, 1, 1, 1).setWeek(2);
   expect(duration.week).toEqual(2);
   expect(duration.day).toEqual(1);
@@ -437,7 +437,7 @@ Deno.test("'Duration.setWeek' should only set the week correctly", () => {
   expect(duration.second).toEqual(1);
 });
 
-Deno.test("'Duration.setDay' should only set the day correctly", () => {
+Deno.test("`Duration.setDay` should only set the day correctly", () => {
   const duration = Duration.from(1, 1, 1, 1, 1).setDay(2);
   expect(duration.week).toEqual(1);
   expect(duration.day).toEqual(2);
@@ -446,7 +446,7 @@ Deno.test("'Duration.setDay' should only set the day correctly", () => {
   expect(duration.second).toEqual(1);
 });
 
-Deno.test("'Duration.setHour' should only set the hour correctly", () => {
+Deno.test("`Duration.setHour` should only set the hour correctly", () => {
   const duration = Duration.from(1, 1, 1, 1, 1).setHour(2);
   expect(duration.week).toEqual(1);
   expect(duration.day).toEqual(1);
@@ -455,7 +455,7 @@ Deno.test("'Duration.setHour' should only set the hour correctly", () => {
   expect(duration.second).toEqual(1);
 });
 
-Deno.test("'Duration.setMinute' should only set the minute correctly", () => {
+Deno.test("`Duration.setMinute` should only set the minute correctly", () => {
   const duration = Duration.from(1, 1, 1, 1, 1).setMinute(2);
   expect(duration.week).toEqual(1);
   expect(duration.day).toEqual(1);
@@ -464,7 +464,7 @@ Deno.test("'Duration.setMinute' should only set the minute correctly", () => {
   expect(duration.second).toEqual(1);
 });
 
-Deno.test("'Duration.setSecond' should only set the second correctly", () => {
+Deno.test("`Duration.setSecond` should only set the second correctly", () => {
   const duration = Duration.from(1, 1, 1, 1, 1).setSecond(2);
   expect(duration.week).toEqual(1);
   expect(duration.day).toEqual(1);
