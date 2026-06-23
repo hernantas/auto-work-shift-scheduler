@@ -520,15 +520,15 @@ Deno.test(
     expect(firstSecond.second).toBe(1);
     expect(firstSecond.minute).toBe(0);
     expect(firstSecond.hour).toBe(0);
-    expect(firstSecond.day).toBe(0);
+    expect(firstSecond.day).toBe(Day.get(0));
     expect(lastSecond.second).toBe(59);
     expect(lastSecond.minute).toBe(0);
     expect(lastSecond.hour).toBe(0);
-    expect(lastSecond.day).toBe(0);
+    expect(lastSecond.day).toBe(Day.get(0));
     expect(overSecond.second).toBe(1);
     expect(overSecond.minute).toBe(1);
     expect(overSecond.hour).toBe(0);
-    expect(overSecond.day).toBe(0);
+    expect(overSecond.day).toBe(Day.get(0));
   },
 );
 
@@ -542,15 +542,15 @@ Deno.test(
     expect(firstSecond.second).toBe(59);
     expect(firstSecond.minute).toBe(59);
     expect(firstSecond.hour).toBe(23);
-    expect(firstSecond.day).toBe(6);
+    expect(firstSecond.day).toBe(Day.get(6));
     expect(lastSecond.second).toBe(0);
     expect(lastSecond.minute).toBe(59);
     expect(lastSecond.hour).toBe(23);
-    expect(lastSecond.day).toBe(6);
+    expect(lastSecond.day).toBe(Day.get(6));
     expect(overSecond.second).toBe(59);
     expect(overSecond.minute).toBe(58);
     expect(overSecond.hour).toBe(23);
-    expect(overSecond.day).toBe(6);
+    expect(overSecond.day).toBe(Day.get(6));
   },
 );
 
@@ -564,15 +564,15 @@ Deno.test(
     expect(firstMinute.second).toBe(0);
     expect(firstMinute.minute).toBe(1);
     expect(firstMinute.hour).toBe(0);
-    expect(firstMinute.day).toBe(0);
+    expect(firstMinute.day).toBe(Day.get(0));
     expect(lastMinute.second).toBe(0);
     expect(lastMinute.minute).toBe(59);
     expect(lastMinute.hour).toBe(0);
-    expect(lastMinute.day).toBe(0);
+    expect(lastMinute.day).toBe(Day.get(0));
     expect(overMinute.second).toBe(0);
     expect(overMinute.minute).toBe(1);
     expect(overMinute.hour).toBe(1);
-    expect(overMinute.day).toBe(0);
+    expect(overMinute.day).toBe(Day.get(0));
   },
 );
 
@@ -586,15 +586,15 @@ Deno.test(
     expect(firstMinute.second).toBe(0);
     expect(firstMinute.minute).toBe(59);
     expect(firstMinute.hour).toBe(23);
-    expect(firstMinute.day).toBe(6);
+    expect(firstMinute.day).toBe(Day.get(6));
     expect(lastMinute.second).toBe(0);
     expect(lastMinute.minute).toBe(0);
     expect(lastMinute.hour).toBe(23);
-    expect(lastMinute.day).toBe(6);
+    expect(lastMinute.day).toBe(Day.get(6));
     expect(overMinute.second).toBe(0);
     expect(overMinute.minute).toBe(59);
     expect(overMinute.hour).toBe(22);
-    expect(overMinute.day).toBe(6);
+    expect(overMinute.day).toBe(Day.get(6));
   },
 );
 
@@ -608,15 +608,15 @@ Deno.test(
     expect(firstHour.second).toBe(0);
     expect(firstHour.minute).toBe(0);
     expect(firstHour.hour).toBe(1);
-    expect(firstHour.day).toBe(0);
+    expect(firstHour.day).toBe(Day.get(0));
     expect(lastHour.second).toBe(0);
     expect(lastHour.minute).toBe(0);
     expect(lastHour.hour).toBe(23);
-    expect(lastHour.day).toBe(0);
+    expect(lastHour.day).toBe(Day.get(0));
     expect(overHour.second).toBe(0);
     expect(overHour.minute).toBe(0);
     expect(overHour.hour).toBe(1);
-    expect(overHour.day).toBe(1);
+    expect(overHour.day).toBe(Day.get(1));
   },
 );
 
@@ -630,15 +630,15 @@ Deno.test(
     expect(firstHour.second).toBe(0);
     expect(firstHour.minute).toBe(0);
     expect(firstHour.hour).toBe(23);
-    expect(firstHour.day).toBe(6);
+    expect(firstHour.day).toBe(Day.get(6));
     expect(lastHour.second).toBe(0);
     expect(lastHour.minute).toBe(0);
     expect(lastHour.hour).toBe(0);
-    expect(lastHour.day).toBe(6);
+    expect(lastHour.day).toBe(Day.get(6));
     expect(overHour.second).toBe(0);
     expect(overHour.minute).toBe(0);
     expect(overHour.hour).toBe(23);
-    expect(overHour.day).toBe(5);
+    expect(overHour.day).toBe(Day.get(5));
   },
 );
 
@@ -652,15 +652,15 @@ Deno.test(
     expect(firstDay.second).toBe(0);
     expect(firstDay.minute).toBe(0);
     expect(firstDay.hour).toBe(0);
-    expect(firstDay.day).toBe(1);
+    expect(firstDay.day).toBe(Day.get(1));
     expect(lastDay.second).toBe(0);
     expect(lastDay.minute).toBe(0);
     expect(lastDay.hour).toBe(0);
-    expect(lastDay.day).toBe(6);
+    expect(lastDay.day).toBe(Day.get(6));
     expect(overDay.second).toBe(0);
     expect(overDay.minute).toBe(0);
     expect(overDay.hour).toBe(0);
-    expect(overDay.day).toBe(1);
+    expect(overDay.day).toBe(Day.get(1));
   },
 );
 
@@ -674,15 +674,15 @@ Deno.test(
     expect(firstDay.second).toBe(0);
     expect(firstDay.minute).toBe(0);
     expect(firstDay.hour).toBe(0);
-    expect(firstDay.day).toBe(6);
+    expect(firstDay.day).toBe(Day.get(6));
     expect(lastDay.second).toBe(0);
     expect(lastDay.minute).toBe(0);
     expect(lastDay.hour).toBe(0);
-    expect(lastDay.day).toBe(0);
+    expect(lastDay.day).toBe(Day.get(0));
     expect(overDay.second).toBe(0);
     expect(overDay.minute).toBe(0);
     expect(overDay.hour).toBe(0);
-    expect(overDay.day).toBe(6);
+    expect(overDay.day).toBe(Day.get(6));
   },
 );
 
@@ -741,19 +741,19 @@ Deno.test("`DayTime.forward` should add two durations correctly", () => {
   expect(forwardSecond.second).toBe(1);
   expect(forwardSecond.minute).toBe(0);
   expect(forwardSecond.hour).toBe(0);
-  expect(forwardSecond.day).toBe(0);
+  expect(forwardSecond.day).toBe(Day.get(0));
   expect(forwardMinute.second).toBe(0);
   expect(forwardMinute.minute).toBe(1);
   expect(forwardMinute.hour).toBe(0);
-  expect(forwardMinute.day).toBe(0);
+  expect(forwardMinute.day).toBe(Day.get(0));
   expect(forwardHour.second).toBe(0);
   expect(forwardHour.minute).toBe(0);
   expect(forwardHour.hour).toBe(1);
-  expect(forwardHour.day).toBe(0);
+  expect(forwardHour.day).toBe(Day.get(0));
   expect(forwardDay.second).toBe(0);
   expect(forwardDay.minute).toBe(0);
   expect(forwardDay.hour).toBe(0);
-  expect(forwardDay.day).toBe(1);
+  expect(forwardDay.day).toBe(Day.get(1));
 });
 
 Deno.test("`DayTime.backward` should add two durations correctly", () => {
@@ -767,28 +767,28 @@ Deno.test("`DayTime.backward` should add two durations correctly", () => {
   expect(backwardSecond.second).toBe(59);
   expect(backwardSecond.minute).toBe(59);
   expect(backwardSecond.hour).toBe(23);
-  expect(backwardSecond.day).toBe(6);
+  expect(backwardSecond.day).toBe(Day.get(6));
   expect(backwardMinute.second).toBe(0);
   expect(backwardMinute.minute).toBe(59);
   expect(backwardMinute.hour).toBe(23);
-  expect(backwardMinute.day).toBe(6);
+  expect(backwardMinute.day).toBe(Day.get(6));
   expect(backwardHour.second).toBe(0);
   expect(backwardHour.minute).toBe(0);
   expect(backwardHour.hour).toBe(23);
-  expect(backwardHour.day).toBe(6);
+  expect(backwardHour.day).toBe(Day.get(6));
   expect(backwardDay.second).toBe(0);
   expect(backwardDay.minute).toBe(0);
   expect(backwardDay.hour).toBe(0);
-  expect(backwardHour.day).toBe(6);
+  expect(backwardHour.day).toBe(Day.get(6));
   expect(backwardWeek.second).toBe(0);
   expect(backwardWeek.minute).toBe(0);
   expect(backwardWeek.hour).toBe(0);
-  expect(backwardWeek.day).toBe(0);
+  expect(backwardWeek.day).toBe(Day.get(0));
 });
 
 Deno.test("`DayTime.setDay` should only set the day correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setDay(2);
-  expect(dt.day).toBe(2);
+  expect(dt.day).toBe(Day.get(2));
   expect(dt.hour).toBe(1);
   expect(dt.minute).toBe(1);
   expect(dt.second).toBe(1);
@@ -796,7 +796,7 @@ Deno.test("`DayTime.setDay` should only set the day correctly", () => {
 
 Deno.test("`DayTime.setHour` should only set the hour correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setHour(2);
-  expect(dt.day).toBe(1);
+  expect(dt.day).toBe(Day.get(1));
   expect(dt.hour).toBe(2);
   expect(dt.minute).toBe(1);
   expect(dt.second).toBe(1);
@@ -804,7 +804,7 @@ Deno.test("`DayTime.setHour` should only set the hour correctly", () => {
 
 Deno.test("`DayTime.setMinute` should only set the minute correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setMinute(2);
-  expect(dt.day).toBe(1);
+  expect(dt.day).toBe(Day.get(1));
   expect(dt.hour).toBe(1);
   expect(dt.minute).toBe(2);
   expect(dt.second).toBe(1);
@@ -812,7 +812,7 @@ Deno.test("`DayTime.setMinute` should only set the minute correctly", () => {
 
 Deno.test("`DayTime.setSecond` should only set the second correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setSecond(2);
-  expect(dt.day).toBe(1);
+  expect(dt.day).toBe(Day.get(1));
   expect(dt.hour).toBe(1);
   expect(dt.minute).toBe(1);
   expect(dt.second).toBe(2);

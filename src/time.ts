@@ -191,16 +191,17 @@ export class Duration implements Time {
 
 export class DayTime implements Time {
   public static from(
-    day: number,
+    day: number | Day,
     hour: number,
     minute: number,
     second: number,
   ): DayTime {
-    const duration = Duration.from(0, day, hour, minute, second);
+    const dayIndex = typeof day === "number" ? day : day.index;
+    const duration = Duration.from(0, dayIndex, hour, minute, second);
     return new DayTime(duration);
   }
 
-  public static fromDay(value: number): DayTime {
+  public static fromDay(value: number | Day): DayTime {
     return DayTime.from(value, 0, 0, 0);
   }
 
@@ -216,7 +217,7 @@ export class DayTime implements Time {
     return DayTime.from(0, 0, 0, value);
   }
 
-  public readonly day: number;
+  public readonly day: Day;
   public readonly hour: number;
   public readonly minute: number;
   public readonly second: number;
@@ -228,7 +229,7 @@ export class DayTime implements Time {
     const normalizedValue = getCircularNumber(value, Duration.SECONDS_IN_WEEK);
 
     this.duration = new Duration(normalizedValue);
-    this.day = this.duration.day;
+    this.day = Day.get(this.duration.day);
     this.hour = this.duration.hour;
     this.minute = this.duration.minute;
     this.second = this.duration.second;
