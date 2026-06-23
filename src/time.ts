@@ -47,3 +47,126 @@ export class Day {
     return this.index > day.index;
   }
 }
+
+export type NumberSign = -1 | 0 | 1;
+
+export class Duration {
+  public static readonly DAY_IN_WEEK: number = Day.size;
+  public static readonly HOUR_IN_DAY: number = 24;
+  public static readonly HOUR_IN_WEEK: number =
+    Duration.DAY_IN_WEEK * Duration.HOUR_IN_DAY;
+  public static readonly MINUTES_IN_HOUR: number = 60;
+  public static readonly MINUTES_IN_DAY: number =
+    Duration.HOUR_IN_DAY * Duration.MINUTES_IN_HOUR;
+  public static readonly MINUTES_IN_WEEK: number =
+    Duration.HOUR_IN_WEEK * Duration.MINUTES_IN_HOUR;
+  public static readonly SECONDS_IN_MINUTE: number = 60;
+  public static readonly SECONDS_IN_HOUR: number =
+    Duration.MINUTES_IN_HOUR * Duration.SECONDS_IN_MINUTE;
+  public static readonly SECONDS_IN_DAY: number =
+    Duration.MINUTES_IN_DAY * Duration.SECONDS_IN_MINUTE;
+  public static readonly SECONDS_IN_WEEK: number =
+    Duration.MINUTES_IN_WEEK * Duration.SECONDS_IN_MINUTE;
+
+  public static readonly origin = new Duration(0);
+
+  public static from(
+    week: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second: number,
+  ): Duration {
+    return new Duration(
+      week * Duration.SECONDS_IN_WEEK +
+        day * Duration.SECONDS_IN_DAY +
+        hour * Duration.SECONDS_IN_HOUR +
+        minute * Duration.SECONDS_IN_MINUTE +
+        second,
+    );
+  }
+
+  public static fromWeek(value: number): Duration {
+    return Duration.from(value, 0, 0, 0, 0);
+  }
+
+  public static fromDay(value: number): Duration {
+    return Duration.from(0, value, 0, 0, 0);
+  }
+
+  public static fromHour(value: number): Duration {
+    return Duration.from(0, 0, value, 0, 0);
+  }
+
+  public static fromMinute(value: number): Duration {
+    return Duration.from(0, 0, 0, value, 0);
+  }
+
+  public static fromSecond(value: number): Duration {
+    return Duration.from(0, 0, 0, 0, value);
+  }
+
+  public readonly sign: NumberSign;
+  public readonly week: number;
+  public readonly day: number;
+  public readonly hour: number;
+  public readonly minute: number;
+  public readonly second: number;
+
+  public constructor(public readonly timestamp: number) {
+    const value = Math.abs(timestamp);
+    this.sign = timestamp === 0 ? 0 : timestamp < 0 ? -1 : 1;
+    this.week = Math.floor(value / Duration.SECONDS_IN_WEEK) * this.sign;
+    this.day =
+      Math.floor((value % Duration.SECONDS_IN_WEEK) / Duration.SECONDS_IN_DAY) *
+      this.sign;
+    this.hour =
+      Math.floor((value % Duration.SECONDS_IN_DAY) / Duration.SECONDS_IN_HOUR) *
+      this.sign;
+    this.minute =
+      Math.floor(
+        (value % Duration.SECONDS_IN_HOUR) / Duration.SECONDS_IN_MINUTE,
+      ) * this.sign;
+    this.second = Math.floor(value % Duration.SECONDS_IN_MINUTE) * this.sign;
+  }
+
+  public backward(time: Duration): Duration {
+    return new Duration(this.timestamp - time.timestamp);
+  }
+
+  public forward(time: Duration): Duration {
+    return new Duration(this.timestamp + time.timestamp);
+  }
+
+  public setWeek(week: number): Duration {
+    return Duration.from(week, this.day, this.hour, this.minute, this.second);
+  }
+
+  public setDay(day: number): Duration {
+    return Duration.from(this.week, day, this.hour, this.minute, this.second);
+  }
+
+  public setHour(hour: number): Duration {
+    return Duration.from(this.week, this.day, hour, this.minute, this.second);
+  }
+
+  public setMinute(minute: number): Duration {
+    return Duration.from(this.week, this.day, this.hour, minute, this.second);
+  }
+
+  public setSecond(second: number): Duration {
+    return Duration.from(this.week, this.day, this.hour, this.minute, second);
+  }
+
+  public before(time: Duration): boolean {
+    return this.timestamp < time.timestamp;
+  }
+
+  public equals(time: Duration): boolean {
+    return this.timestamp === time.timestamp;
+  }
+
+  public after(time: Duration): boolean {
+    return this.timestamp > time.timestamp;
+  }
+}

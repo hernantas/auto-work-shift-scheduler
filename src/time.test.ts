@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Day } from "./time.ts";
+import { Day, Duration } from "./time.ts";
 
 Deno.test("'Day.get' should return the correct day", () => {
   const firstDay = Day.get(0);
@@ -81,4 +81,394 @@ Deno.test("'Day.after' should compare days correctly", () => {
   expect(lastDay.after(firstDay)).toBe(true);
   expect(lastDay.after(middleDay)).toBe(true);
   expect(lastDay.after(lastDay)).toBe(false);
+});
+
+Deno.test("'Duration' constants should be set correctly", () => {
+  expect(Duration.DAY_IN_WEEK).toBe(7);
+  expect(Duration.HOUR_IN_DAY).toBe(24);
+  expect(Duration.HOUR_IN_WEEK).toBe(7 * 24);
+  expect(Duration.MINUTES_IN_HOUR).toBe(60);
+  expect(Duration.MINUTES_IN_DAY).toBe(24 * 60);
+  expect(Duration.MINUTES_IN_WEEK).toBe(7 * 24 * 60);
+  expect(Duration.SECONDS_IN_MINUTE).toBe(60);
+  expect(Duration.SECONDS_IN_HOUR).toBe(60 * 60);
+  expect(Duration.SECONDS_IN_DAY).toBe(24 * 60 * 60);
+  expect(Duration.SECONDS_IN_WEEK).toBe(7 * 24 * 60 * 60);
+});
+
+Deno.test(
+  "'Duration.fromSecond' should return the correct positive time when set with positive value",
+  () => {
+    const firstSecond = Duration.fromSecond(1);
+    const lastSecond = Duration.fromSecond(59);
+    const overSecond = Duration.fromSecond(61);
+
+    expect(firstSecond.second).toBe(1);
+    expect(firstSecond.minute).toBe(0);
+    expect(firstSecond.hour).toBe(0);
+    expect(firstSecond.day).toBe(0);
+    expect(firstSecond.week).toBe(0);
+    expect(lastSecond.second).toBe(59);
+    expect(lastSecond.minute).toBe(0);
+    expect(lastSecond.hour).toBe(0);
+    expect(lastSecond.day).toBe(0);
+    expect(lastSecond.week).toBe(0);
+    expect(overSecond.second).toBe(1);
+    expect(overSecond.minute).toBe(1);
+    expect(overSecond.hour).toBe(0);
+    expect(overSecond.day).toBe(0);
+    expect(overSecond.week).toBe(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromSecond' should return the correct negative time when set with negative value",
+  () => {
+    const firstSecond = Duration.fromSecond(-1);
+    const lastSecond = Duration.fromSecond(-59);
+    const overSecond = Duration.fromSecond(-61);
+
+    expect(firstSecond.second).toEqual(-1);
+    expect(firstSecond.minute).toEqual(0);
+    expect(firstSecond.hour).toEqual(0);
+    expect(firstSecond.day).toEqual(0);
+    expect(firstSecond.week).toEqual(0);
+    expect(lastSecond.second).toEqual(-59);
+    expect(lastSecond.minute).toEqual(0);
+    expect(lastSecond.hour).toEqual(0);
+    expect(lastSecond.day).toEqual(0);
+    expect(lastSecond.week).toEqual(0);
+    expect(overSecond.second).toEqual(-1);
+    expect(overSecond.minute).toEqual(-1);
+    expect(overSecond.hour).toEqual(0);
+    expect(overSecond.day).toEqual(0);
+    expect(overSecond.week).toEqual(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromMinute' should return the correct positive time when set with positive value",
+  () => {
+    const firstMinute = Duration.fromMinute(1);
+    const lastMinute = Duration.fromMinute(59);
+    const overMinute = Duration.fromMinute(61);
+
+    expect(firstMinute.second).toBe(0);
+    expect(firstMinute.minute).toBe(1);
+    expect(firstMinute.hour).toBe(0);
+    expect(firstMinute.day).toBe(0);
+    expect(firstMinute.week).toBe(0);
+    expect(lastMinute.second).toBe(0);
+    expect(lastMinute.minute).toBe(59);
+    expect(lastMinute.hour).toBe(0);
+    expect(lastMinute.day).toBe(0);
+    expect(lastMinute.week).toBe(0);
+    expect(overMinute.second).toBe(0);
+    expect(overMinute.minute).toBe(1);
+    expect(overMinute.hour).toBe(1);
+    expect(overMinute.day).toBe(0);
+    expect(overMinute.week).toBe(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromMinute' should return the correct negative time when set with negative value",
+  () => {
+    const firstMinute = Duration.fromMinute(-1);
+    const lastMinute = Duration.fromMinute(-59);
+    const overMinute = Duration.fromMinute(-61);
+
+    expect(firstMinute.second).toEqual(0);
+    expect(firstMinute.minute).toEqual(-1);
+    expect(firstMinute.hour).toEqual(0);
+    expect(firstMinute.day).toEqual(0);
+    expect(firstMinute.week).toEqual(0);
+    expect(lastMinute.second).toEqual(0);
+    expect(lastMinute.minute).toEqual(-59);
+    expect(lastMinute.hour).toEqual(0);
+    expect(lastMinute.day).toEqual(0);
+    expect(lastMinute.week).toEqual(0);
+    expect(overMinute.second).toEqual(0);
+    expect(overMinute.minute).toEqual(-1);
+    expect(overMinute.hour).toEqual(-1);
+    expect(overMinute.day).toEqual(0);
+    expect(overMinute.week).toEqual(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromHour' should return the correct positive time when set with positive value",
+  () => {
+    const firstHour = Duration.fromHour(1);
+    const lastHour = Duration.fromHour(23);
+    const overHour = Duration.fromHour(25);
+
+    expect(firstHour.second).toBe(0);
+    expect(firstHour.minute).toBe(0);
+    expect(firstHour.hour).toBe(1);
+    expect(firstHour.day).toBe(0);
+    expect(firstHour.week).toBe(0);
+    expect(lastHour.second).toBe(0);
+    expect(lastHour.minute).toBe(0);
+    expect(lastHour.hour).toBe(23);
+    expect(lastHour.day).toBe(0);
+    expect(lastHour.week).toBe(0);
+    expect(overHour.second).toBe(0);
+    expect(overHour.minute).toBe(0);
+    expect(overHour.hour).toBe(1);
+    expect(overHour.day).toBe(1);
+    expect(overHour.week).toBe(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromHour' should return the correct negative time when set with negative value",
+  () => {
+    const firstHour = Duration.fromHour(-1);
+    const lastHour = Duration.fromHour(-23);
+    const overHour = Duration.fromHour(-25);
+
+    expect(firstHour.second).toEqual(0);
+    expect(firstHour.minute).toEqual(0);
+    expect(firstHour.hour).toEqual(-1);
+    expect(firstHour.day).toEqual(0);
+    expect(firstHour.week).toEqual(0);
+    expect(lastHour.second).toEqual(0);
+    expect(lastHour.minute).toEqual(0);
+    expect(lastHour.hour).toEqual(-23);
+    expect(lastHour.day).toEqual(0);
+    expect(lastHour.week).toEqual(0);
+    expect(overHour.second).toEqual(0);
+    expect(overHour.minute).toEqual(0);
+    expect(overHour.hour).toEqual(-1);
+    expect(overHour.day).toEqual(-1);
+    expect(overHour.week).toEqual(0);
+  },
+);
+
+Deno.test(
+  "'Duration.fromDay' should return the correct positive time when set with positive value",
+  () => {
+    const firstDay = Duration.fromDay(1);
+    const lastDay = Duration.fromDay(6);
+    const overDay = Duration.fromDay(8);
+
+    expect(firstDay.second).toBe(0);
+    expect(firstDay.minute).toBe(0);
+    expect(firstDay.hour).toBe(0);
+    expect(firstDay.day).toBe(1);
+    expect(firstDay.week).toBe(0);
+    expect(lastDay.second).toBe(0);
+    expect(lastDay.minute).toBe(0);
+    expect(lastDay.hour).toBe(0);
+    expect(lastDay.day).toBe(6);
+    expect(lastDay.week).toBe(0);
+    expect(overDay.second).toBe(0);
+    expect(overDay.minute).toBe(0);
+    expect(overDay.hour).toBe(0);
+    expect(overDay.day).toBe(1);
+    expect(overDay.week).toBe(1);
+  },
+);
+
+Deno.test(
+  "'Duration.fromDay' should return the correct negative time when set with negative value",
+  () => {
+    const firstDay = Duration.fromDay(-1);
+    const lastDay = Duration.fromDay(-6);
+    const overDay = Duration.fromDay(-8);
+
+    expect(firstDay.second).toEqual(0);
+    expect(firstDay.minute).toEqual(0);
+    expect(firstDay.hour).toEqual(0);
+    expect(firstDay.day).toEqual(-1);
+    expect(firstDay.week).toEqual(0);
+    expect(lastDay.second).toEqual(0);
+    expect(lastDay.minute).toEqual(0);
+    expect(lastDay.hour).toEqual(0);
+    expect(lastDay.day).toEqual(-6);
+    expect(lastDay.week).toEqual(0);
+    expect(overDay.second).toEqual(0);
+    expect(overDay.minute).toEqual(0);
+    expect(overDay.hour).toEqual(0);
+    expect(overDay.day).toEqual(-1);
+    expect(overDay.week).toEqual(-1);
+  },
+);
+
+Deno.test(
+  "'Duration.fromWeek' should return the correct time when set with value",
+  () => {
+    const positiveWeek = Duration.fromWeek(1);
+    const negativeWeek = Duration.fromWeek(-1);
+
+    expect(positiveWeek.second).toBe(0);
+    expect(positiveWeek.minute).toBe(0);
+    expect(positiveWeek.hour).toBe(0);
+    expect(positiveWeek.day).toBe(0);
+    expect(positiveWeek.week).toBe(1);
+    expect(negativeWeek.second).toEqual(0);
+    expect(negativeWeek.minute).toEqual(0);
+    expect(negativeWeek.hour).toEqual(0);
+    expect(negativeWeek.day).toEqual(0);
+    expect(negativeWeek.week).toEqual(-1);
+  },
+);
+
+Deno.test("'Duration.before' should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.before(firstDuration)).toBe(false);
+  expect(firstDuration.before(secondDuration)).toBe(true);
+  expect(firstDuration.before(thirdDuration)).toBe(true);
+  expect(secondDuration.before(firstDuration)).toBe(false);
+  expect(secondDuration.before(secondDuration)).toBe(false);
+  expect(secondDuration.before(thirdDuration)).toBe(true);
+  expect(thirdDuration.before(firstDuration)).toBe(false);
+  expect(thirdDuration.before(secondDuration)).toBe(false);
+  expect(thirdDuration.before(thirdDuration)).toBe(false);
+});
+
+Deno.test("'Duration.equals' should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.equals(firstDuration)).toBe(true);
+  expect(firstDuration.equals(secondDuration)).toBe(false);
+  expect(firstDuration.equals(thirdDuration)).toBe(false);
+  expect(secondDuration.equals(firstDuration)).toBe(false);
+  expect(secondDuration.equals(secondDuration)).toBe(true);
+  expect(secondDuration.equals(thirdDuration)).toBe(false);
+  expect(thirdDuration.equals(firstDuration)).toBe(false);
+  expect(thirdDuration.equals(secondDuration)).toBe(false);
+  expect(thirdDuration.equals(thirdDuration)).toBe(true);
+});
+
+Deno.test("'Duration.after' should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.after(firstDuration)).toBe(false);
+  expect(firstDuration.after(secondDuration)).toBe(false);
+  expect(firstDuration.after(thirdDuration)).toBe(false);
+  expect(secondDuration.after(firstDuration)).toBe(true);
+  expect(secondDuration.after(secondDuration)).toBe(false);
+  expect(secondDuration.after(thirdDuration)).toBe(false);
+  expect(thirdDuration.after(firstDuration)).toBe(true);
+  expect(thirdDuration.after(secondDuration)).toBe(true);
+  expect(thirdDuration.after(thirdDuration)).toBe(false);
+});
+
+Deno.test("'Duration.forward' should add two durations correctly", () => {
+  const forwardSecond = Duration.origin.forward(Duration.fromSecond(1));
+  const forwardMinute = Duration.origin.forward(Duration.fromMinute(1));
+  const forwardHour = Duration.origin.forward(Duration.fromHour(1));
+  const forwardDay = Duration.origin.forward(Duration.fromDay(1));
+  const forwardWeek = Duration.origin.forward(Duration.fromWeek(1));
+
+  expect(forwardSecond.second).toBe(1);
+  expect(forwardSecond.minute).toBe(0);
+  expect(forwardSecond.hour).toBe(0);
+  expect(forwardSecond.day).toBe(0);
+  expect(forwardSecond.week).toBe(0);
+  expect(forwardMinute.second).toBe(0);
+  expect(forwardMinute.minute).toBe(1);
+  expect(forwardMinute.hour).toBe(0);
+  expect(forwardMinute.day).toBe(0);
+  expect(forwardMinute.week).toBe(0);
+  expect(forwardHour.second).toBe(0);
+  expect(forwardHour.minute).toBe(0);
+  expect(forwardHour.hour).toBe(1);
+  expect(forwardHour.day).toBe(0);
+  expect(forwardHour.week).toBe(0);
+  expect(forwardDay.second).toBe(0);
+  expect(forwardDay.minute).toBe(0);
+  expect(forwardDay.hour).toBe(0);
+  expect(forwardDay.day).toBe(1);
+  expect(forwardDay.week).toBe(0);
+  expect(forwardWeek.second).toBe(0);
+  expect(forwardWeek.minute).toBe(0);
+  expect(forwardWeek.hour).toBe(0);
+  expect(forwardWeek.day).toBe(0);
+  expect(forwardWeek.week).toBe(1);
+});
+
+Deno.test("'Duration.backward' should add two durations correctly", () => {
+  const backwardSecond = Duration.origin.backward(Duration.fromSecond(1));
+  const backwardMinute = Duration.origin.backward(Duration.fromMinute(1));
+  const backwardHour = Duration.origin.backward(Duration.fromHour(1));
+  const backwardDay = Duration.origin.backward(Duration.fromDay(1));
+  const backwardWeek = Duration.origin.backward(Duration.fromWeek(1));
+
+  expect(backwardSecond.second).toEqual(-1);
+  expect(backwardSecond.minute).toEqual(0);
+  expect(backwardSecond.hour).toEqual(0);
+  expect(backwardSecond.day).toEqual(0);
+  expect(backwardSecond.week).toEqual(0);
+  expect(backwardMinute.second).toEqual(0);
+  expect(backwardMinute.minute).toEqual(-1);
+  expect(backwardMinute.hour).toEqual(0);
+  expect(backwardMinute.day).toEqual(0);
+  expect(backwardMinute.week).toEqual(0);
+  expect(backwardHour.second).toEqual(0);
+  expect(backwardHour.minute).toEqual(0);
+  expect(backwardHour.hour).toEqual(-1);
+  expect(backwardHour.day).toEqual(0);
+  expect(backwardHour.week).toEqual(0);
+  expect(backwardDay.second).toEqual(0);
+  expect(backwardDay.minute).toEqual(0);
+  expect(backwardDay.hour).toEqual(0);
+  expect(backwardDay.day).toEqual(-1);
+  expect(backwardDay.week).toEqual(0);
+  expect(backwardWeek.second).toEqual(0);
+  expect(backwardWeek.minute).toEqual(0);
+  expect(backwardWeek.hour).toEqual(0);
+  expect(backwardWeek.day).toEqual(0);
+  expect(backwardWeek.week).toEqual(-1);
+});
+
+Deno.test("'Duration.setWeek' should only set the week correctly", () => {
+  const duration = Duration.from(1, 1, 1, 1, 1).setWeek(2);
+  expect(duration.week).toEqual(2);
+  expect(duration.day).toEqual(1);
+  expect(duration.hour).toEqual(1);
+  expect(duration.minute).toEqual(1);
+  expect(duration.second).toEqual(1);
+});
+
+Deno.test("'Duration.setDay' should only set the day correctly", () => {
+  const duration = Duration.from(1, 1, 1, 1, 1).setDay(2);
+  expect(duration.week).toEqual(1);
+  expect(duration.day).toEqual(2);
+  expect(duration.hour).toEqual(1);
+  expect(duration.minute).toEqual(1);
+  expect(duration.second).toEqual(1);
+});
+
+Deno.test("'Duration.setHour' should only set the hour correctly", () => {
+  const duration = Duration.from(1, 1, 1, 1, 1).setHour(2);
+  expect(duration.week).toEqual(1);
+  expect(duration.day).toEqual(1);
+  expect(duration.hour).toEqual(2);
+  expect(duration.minute).toEqual(1);
+  expect(duration.second).toEqual(1);
+});
+
+Deno.test("'Duration.setMinute' should only set the minute correctly", () => {
+  const duration = Duration.from(1, 1, 1, 1, 1).setMinute(2);
+  expect(duration.week).toEqual(1);
+  expect(duration.day).toEqual(1);
+  expect(duration.hour).toEqual(1);
+  expect(duration.minute).toEqual(2);
+  expect(duration.second).toEqual(1);
+});
+
+Deno.test("'Duration.setSecond' should only set the second correctly", () => {
+  const duration = Duration.from(1, 1, 1, 1, 1).setSecond(2);
+  expect(duration.week).toEqual(1);
+  expect(duration.day).toEqual(1);
+  expect(duration.hour).toEqual(1);
+  expect(duration.minute).toEqual(1);
+  expect(duration.second).toEqual(2);
 });
