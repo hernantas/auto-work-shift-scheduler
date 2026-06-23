@@ -687,9 +687,9 @@ Deno.test(
 );
 
 Deno.test("`DayTime.before` should compare two durations correctly", () => {
-  const firstDuration = new Duration(10);
-  const secondDuration = new Duration(20);
-  const thirdDuration = new Duration(30);
+  const firstDuration = DayTime.fromDay(0);
+  const secondDuration = DayTime.fromDay(3);
+  const thirdDuration = DayTime.fromDay(6);
   expect(firstDuration.before(firstDuration)).toBe(false);
   expect(firstDuration.before(secondDuration)).toBe(true);
   expect(firstDuration.before(thirdDuration)).toBe(true);
@@ -702,9 +702,9 @@ Deno.test("`DayTime.before` should compare two durations correctly", () => {
 });
 
 Deno.test("`DayTime.equals` should compare two durations correctly", () => {
-  const firstDuration = new Duration(10);
-  const secondDuration = new Duration(20);
-  const thirdDuration = new Duration(30);
+  const firstDuration = DayTime.fromDay(0);
+  const secondDuration = DayTime.fromDay(3);
+  const thirdDuration = DayTime.fromDay(6);
   expect(firstDuration.equals(firstDuration)).toBe(true);
   expect(firstDuration.equals(secondDuration)).toBe(false);
   expect(firstDuration.equals(thirdDuration)).toBe(false);
@@ -717,9 +717,9 @@ Deno.test("`DayTime.equals` should compare two durations correctly", () => {
 });
 
 Deno.test("`DayTime.after` should compare two durations correctly", () => {
-  const firstDuration = new Duration(10);
-  const secondDuration = new Duration(20);
-  const thirdDuration = new Duration(30);
+  const firstDuration = DayTime.fromDay(0);
+  const secondDuration = DayTime.fromDay(3);
+  const thirdDuration = DayTime.fromDay(6);
   expect(firstDuration.after(firstDuration)).toBe(false);
   expect(firstDuration.after(secondDuration)).toBe(false);
   expect(firstDuration.after(thirdDuration)).toBe(false);
