@@ -182,6 +182,11 @@ export class Duration implements Time {
   public after(time: Duration): boolean {
     return this.timestamp > time.timestamp;
   }
+
+  public distanceTo(time: number | Duration): Duration {
+    const timestamp = getTimestamp(time);
+    return new Duration(Math.abs(timestamp - this.timestamp));
+  }
 }
 
 export class DayTime implements Time {
@@ -266,5 +271,13 @@ export class DayTime implements Time {
 
   public after(time: DayTime): boolean {
     return this.timestamp > time.timestamp;
+  }
+
+  public distanceTo(dt: DayTime): Duration {
+    if (dt.before(this)) {
+      const normalizedDT = dt.duration.forward(Duration.fromWeek(1));
+      return new Duration(normalizedDT.timestamp - this.timestamp);
+    }
+    return new Duration(dt.timestamp - this.timestamp);
   }
 }

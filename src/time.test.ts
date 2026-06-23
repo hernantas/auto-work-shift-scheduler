@@ -474,6 +474,43 @@ Deno.test("`Duration.setSecond` should only set the second correctly", () => {
 });
 
 Deno.test(
+  "`Duration.distanceTo` should calculate the distance correctly",
+  () => {
+    const withSecond = Duration.fromSecond(1);
+    const withMinute = Duration.fromMinute(1);
+    const withHour = Duration.fromHour(1);
+    const withDay = Duration.fromDay(1);
+    const withWeek = Duration.fromWeek(1);
+
+    expect(withSecond.second).toBe(1);
+    expect(withSecond.minute).toBe(0);
+    expect(withSecond.hour).toBe(0);
+    expect(withSecond.day).toBe(0);
+    expect(withSecond.week).toBe(0);
+    expect(withMinute.second).toBe(0);
+    expect(withMinute.minute).toBe(1);
+    expect(withMinute.hour).toBe(0);
+    expect(withMinute.day).toBe(0);
+    expect(withMinute.week).toBe(0);
+    expect(withHour.second).toBe(0);
+    expect(withHour.minute).toBe(0);
+    expect(withHour.hour).toBe(1);
+    expect(withHour.day).toBe(0);
+    expect(withHour.week).toBe(0);
+    expect(withDay.second).toBe(0);
+    expect(withDay.minute).toBe(0);
+    expect(withDay.hour).toBe(0);
+    expect(withDay.day).toBe(1);
+    expect(withDay.week).toBe(0);
+    expect(withWeek.second).toBe(0);
+    expect(withWeek.minute).toBe(0);
+    expect(withWeek.hour).toBe(0);
+    expect(withWeek.day).toBe(0);
+    expect(withWeek.week).toBe(1);
+  },
+);
+
+Deno.test(
   "`DayTime.fromSecond` should return the correct time when set with positive value",
   () => {
     const firstSecond = DayTime.fromSecond(1);
@@ -751,32 +788,88 @@ Deno.test("`DayTime.backward` should add two durations correctly", () => {
 
 Deno.test("`DayTime.setDay` should only set the day correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setDay(2);
-  expect(dt.day).toEqual(2);
-  expect(dt.hour).toEqual(1);
-  expect(dt.minute).toEqual(1);
-  expect(dt.second).toEqual(1);
+  expect(dt.day).toBe(2);
+  expect(dt.hour).toBe(1);
+  expect(dt.minute).toBe(1);
+  expect(dt.second).toBe(1);
 });
 
 Deno.test("`DayTime.setHour` should only set the hour correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setHour(2);
-  expect(dt.day).toEqual(1);
-  expect(dt.hour).toEqual(2);
-  expect(dt.minute).toEqual(1);
-  expect(dt.second).toEqual(1);
+  expect(dt.day).toBe(1);
+  expect(dt.hour).toBe(2);
+  expect(dt.minute).toBe(1);
+  expect(dt.second).toBe(1);
 });
 
 Deno.test("`DayTime.setMinute` should only set the minute correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setMinute(2);
-  expect(dt.day).toEqual(1);
-  expect(dt.hour).toEqual(1);
-  expect(dt.minute).toEqual(2);
-  expect(dt.second).toEqual(1);
+  expect(dt.day).toBe(1);
+  expect(dt.hour).toBe(1);
+  expect(dt.minute).toBe(2);
+  expect(dt.second).toBe(1);
 });
 
 Deno.test("`DayTime.setSecond` should only set the second correctly", () => {
   const dt = DayTime.from(1, 1, 1, 1).setSecond(2);
-  expect(dt.day).toEqual(1);
-  expect(dt.hour).toEqual(1);
-  expect(dt.minute).toEqual(1);
-  expect(dt.second).toEqual(2);
+  expect(dt.day).toBe(1);
+  expect(dt.hour).toBe(1);
+  expect(dt.minute).toBe(1);
+  expect(dt.second).toBe(2);
 });
+
+Deno.test(
+  "`DayTime.distanceTo` should calculate the distance correctly",
+  () => {
+    const origin = DayTime.from(0, 0, 0, 0);
+    const withSecond = origin.distanceTo(DayTime.fromSecond(1));
+    const withMinute = origin.distanceTo(DayTime.fromMinute(1));
+    const withHour = origin.distanceTo(DayTime.fromHour(1));
+    const withDay = origin.distanceTo(DayTime.fromDay(1));
+
+    expect(withSecond.second).toBe(1);
+    expect(withSecond.minute).toBe(0);
+    expect(withSecond.hour).toBe(0);
+    expect(withSecond.day).toBe(0);
+    expect(withMinute.second).toBe(0);
+    expect(withMinute.minute).toBe(1);
+    expect(withMinute.hour).toBe(0);
+    expect(withMinute.day).toBe(0);
+    expect(withHour.second).toBe(0);
+    expect(withHour.minute).toBe(0);
+    expect(withHour.hour).toBe(1);
+    expect(withHour.day).toBe(0);
+    expect(withDay.second).toBe(0);
+    expect(withDay.minute).toBe(0);
+    expect(withDay.hour).toBe(0);
+    expect(withDay.day).toBe(1);
+  },
+);
+
+Deno.test(
+  "`DayTime.distanceTo` should calculate the distance as if the time wrapped around if the time is before the current time",
+  () => {
+    const origin = DayTime.from(0, 0, 0, 0);
+    const withSecond = origin.distanceTo(DayTime.fromSecond(-1));
+    const withMinute = origin.distanceTo(DayTime.fromMinute(-1));
+    const withHour = origin.distanceTo(DayTime.fromHour(-1));
+    const withDay = origin.distanceTo(DayTime.fromDay(-1));
+
+    expect(withSecond.second).toBe(59);
+    expect(withSecond.minute).toBe(59);
+    expect(withSecond.hour).toBe(23);
+    expect(withSecond.day).toBe(6);
+    expect(withMinute.second).toBe(0);
+    expect(withMinute.minute).toBe(59);
+    expect(withMinute.hour).toBe(23);
+    expect(withMinute.day).toBe(6);
+    expect(withHour.second).toBe(0);
+    expect(withHour.minute).toBe(0);
+    expect(withHour.hour).toBe(23);
+    expect(withHour.day).toBe(6);
+    expect(withDay.second).toBe(0);
+    expect(withDay.minute).toBe(0);
+    expect(withDay.hour).toBe(0);
+    expect(withDay.day).toBe(6);
+  },
+);
