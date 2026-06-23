@@ -48,9 +48,17 @@ export class Day {
   }
 }
 
+export interface Time {
+  readonly timestamp: number;
+}
+
+export function getTimestamp(time: number | Time): number {
+  return typeof time === "number" ? time : time.timestamp;
+}
+
 export type NumberSign = -1 | 0 | 1;
 
-export class Duration {
+export class Duration implements Time {
   public static readonly DAY_IN_WEEK: number = Day.size;
   public static readonly HOUR_IN_DAY: number = 24;
   public static readonly HOUR_IN_WEEK: number =
@@ -115,7 +123,7 @@ export class Duration {
   public readonly timestamp: number;
 
   public constructor(time: number | Duration) {
-    this.timestamp = typeof time === "number" ? time : time.timestamp;
+    this.timestamp = getTimestamp(time);
     this.sign = this.timestamp === 0 ? 0 : this.timestamp < 0 ? -1 : 1;
 
     const value = Math.abs(this.timestamp);
@@ -134,12 +142,12 @@ export class Duration {
   }
 
   public backward(time: number | Duration): Duration {
-    const timestamp = typeof time === "number" ? time : time.timestamp;
+    const timestamp = getTimestamp(time);
     return new Duration(this.timestamp - timestamp);
   }
 
   public forward(time: number | Duration): Duration {
-    const timestamp = typeof time === "number" ? time : time.timestamp;
+    const timestamp = getTimestamp(time);
     return new Duration(this.timestamp + timestamp);
   }
 
