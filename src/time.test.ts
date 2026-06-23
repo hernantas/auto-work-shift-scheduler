@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Day, Duration } from "./time.ts";
+import { Day, DayTime, Duration } from "./time.ts";
 
 Deno.test("`Day.get` should return the correct day", () => {
   const firstDay = Day.get(0);
@@ -471,4 +471,312 @@ Deno.test("`Duration.setSecond` should only set the second correctly", () => {
   expect(duration.hour).toEqual(1);
   expect(duration.minute).toEqual(1);
   expect(duration.second).toEqual(2);
+});
+
+Deno.test(
+  "`DayTime.fromSecond` should return the correct time when set with positive value",
+  () => {
+    const firstSecond = DayTime.fromSecond(1);
+    const lastSecond = DayTime.fromSecond(59);
+    const overSecond = DayTime.fromSecond(61);
+
+    expect(firstSecond.second).toBe(1);
+    expect(firstSecond.minute).toBe(0);
+    expect(firstSecond.hour).toBe(0);
+    expect(firstSecond.day).toBe(0);
+    expect(lastSecond.second).toBe(59);
+    expect(lastSecond.minute).toBe(0);
+    expect(lastSecond.hour).toBe(0);
+    expect(lastSecond.day).toBe(0);
+    expect(overSecond.second).toBe(1);
+    expect(overSecond.minute).toBe(1);
+    expect(overSecond.hour).toBe(0);
+    expect(overSecond.day).toBe(0);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromSecond` should return the correct time when set with negative value",
+  () => {
+    const firstSecond = DayTime.fromSecond(-1);
+    const lastSecond = DayTime.fromSecond(-60);
+    const overSecond = DayTime.fromSecond(-61);
+
+    expect(firstSecond.second).toBe(59);
+    expect(firstSecond.minute).toBe(59);
+    expect(firstSecond.hour).toBe(23);
+    expect(firstSecond.day).toBe(6);
+    expect(lastSecond.second).toBe(0);
+    expect(lastSecond.minute).toBe(59);
+    expect(lastSecond.hour).toBe(23);
+    expect(lastSecond.day).toBe(6);
+    expect(overSecond.second).toBe(59);
+    expect(overSecond.minute).toBe(58);
+    expect(overSecond.hour).toBe(23);
+    expect(overSecond.day).toBe(6);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromMinute` should return the correct time when set with positive value",
+  () => {
+    const firstMinute = DayTime.fromMinute(1);
+    const lastMinute = DayTime.fromMinute(59);
+    const overMinute = DayTime.fromMinute(61);
+
+    expect(firstMinute.second).toBe(0);
+    expect(firstMinute.minute).toBe(1);
+    expect(firstMinute.hour).toBe(0);
+    expect(firstMinute.day).toBe(0);
+    expect(lastMinute.second).toBe(0);
+    expect(lastMinute.minute).toBe(59);
+    expect(lastMinute.hour).toBe(0);
+    expect(lastMinute.day).toBe(0);
+    expect(overMinute.second).toBe(0);
+    expect(overMinute.minute).toBe(1);
+    expect(overMinute.hour).toBe(1);
+    expect(overMinute.day).toBe(0);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromMinute` should return the correct time when set with negative value",
+  () => {
+    const firstMinute = DayTime.fromMinute(-1);
+    const lastMinute = DayTime.fromMinute(-60);
+    const overMinute = DayTime.fromMinute(-61);
+
+    expect(firstMinute.second).toBe(0);
+    expect(firstMinute.minute).toBe(59);
+    expect(firstMinute.hour).toBe(23);
+    expect(firstMinute.day).toBe(6);
+    expect(lastMinute.second).toBe(0);
+    expect(lastMinute.minute).toBe(0);
+    expect(lastMinute.hour).toBe(23);
+    expect(lastMinute.day).toBe(6);
+    expect(overMinute.second).toBe(0);
+    expect(overMinute.minute).toBe(59);
+    expect(overMinute.hour).toBe(22);
+    expect(overMinute.day).toBe(6);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromHour` should return the correct time when set with positive value",
+  () => {
+    const firstHour = DayTime.fromHour(1);
+    const lastHour = DayTime.fromHour(23);
+    const overHour = DayTime.fromHour(25);
+
+    expect(firstHour.second).toBe(0);
+    expect(firstHour.minute).toBe(0);
+    expect(firstHour.hour).toBe(1);
+    expect(firstHour.day).toBe(0);
+    expect(lastHour.second).toBe(0);
+    expect(lastHour.minute).toBe(0);
+    expect(lastHour.hour).toBe(23);
+    expect(lastHour.day).toBe(0);
+    expect(overHour.second).toBe(0);
+    expect(overHour.minute).toBe(0);
+    expect(overHour.hour).toBe(1);
+    expect(overHour.day).toBe(1);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromHour` should return the correct time when set with negative value",
+  () => {
+    const firstHour = DayTime.fromHour(-1);
+    const lastHour = DayTime.fromHour(-24);
+    const overHour = DayTime.fromHour(-25);
+
+    expect(firstHour.second).toBe(0);
+    expect(firstHour.minute).toBe(0);
+    expect(firstHour.hour).toBe(23);
+    expect(firstHour.day).toBe(6);
+    expect(lastHour.second).toBe(0);
+    expect(lastHour.minute).toBe(0);
+    expect(lastHour.hour).toBe(0);
+    expect(lastHour.day).toBe(6);
+    expect(overHour.second).toBe(0);
+    expect(overHour.minute).toBe(0);
+    expect(overHour.hour).toBe(23);
+    expect(overHour.day).toBe(5);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromDay` should return the correct time when set with positive value",
+  () => {
+    const firstDay = DayTime.fromDay(1);
+    const lastDay = DayTime.fromDay(6);
+    const overDay = DayTime.fromDay(8);
+
+    expect(firstDay.second).toBe(0);
+    expect(firstDay.minute).toBe(0);
+    expect(firstDay.hour).toBe(0);
+    expect(firstDay.day).toBe(1);
+    expect(lastDay.second).toBe(0);
+    expect(lastDay.minute).toBe(0);
+    expect(lastDay.hour).toBe(0);
+    expect(lastDay.day).toBe(6);
+    expect(overDay.second).toBe(0);
+    expect(overDay.minute).toBe(0);
+    expect(overDay.hour).toBe(0);
+    expect(overDay.day).toBe(1);
+  },
+);
+
+Deno.test(
+  "`DayTime.fromDay` should return the correct time when set with negative value",
+  () => {
+    const firstDay = DayTime.fromDay(-1);
+    const lastDay = DayTime.fromDay(-7);
+    const overDay = DayTime.fromDay(-8);
+
+    expect(firstDay.second).toBe(0);
+    expect(firstDay.minute).toBe(0);
+    expect(firstDay.hour).toBe(0);
+    expect(firstDay.day).toBe(6);
+    expect(lastDay.second).toBe(0);
+    expect(lastDay.minute).toBe(0);
+    expect(lastDay.hour).toBe(0);
+    expect(lastDay.day).toBe(0);
+    expect(overDay.second).toBe(0);
+    expect(overDay.minute).toBe(0);
+    expect(overDay.hour).toBe(0);
+    expect(overDay.day).toBe(6);
+  },
+);
+
+Deno.test("`DayTime.before` should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.before(firstDuration)).toBe(false);
+  expect(firstDuration.before(secondDuration)).toBe(true);
+  expect(firstDuration.before(thirdDuration)).toBe(true);
+  expect(secondDuration.before(firstDuration)).toBe(false);
+  expect(secondDuration.before(secondDuration)).toBe(false);
+  expect(secondDuration.before(thirdDuration)).toBe(true);
+  expect(thirdDuration.before(firstDuration)).toBe(false);
+  expect(thirdDuration.before(secondDuration)).toBe(false);
+  expect(thirdDuration.before(thirdDuration)).toBe(false);
+});
+
+Deno.test("`DayTime.equals` should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.equals(firstDuration)).toBe(true);
+  expect(firstDuration.equals(secondDuration)).toBe(false);
+  expect(firstDuration.equals(thirdDuration)).toBe(false);
+  expect(secondDuration.equals(firstDuration)).toBe(false);
+  expect(secondDuration.equals(secondDuration)).toBe(true);
+  expect(secondDuration.equals(thirdDuration)).toBe(false);
+  expect(thirdDuration.equals(firstDuration)).toBe(false);
+  expect(thirdDuration.equals(secondDuration)).toBe(false);
+  expect(thirdDuration.equals(thirdDuration)).toBe(true);
+});
+
+Deno.test("`DayTime.after` should compare two durations correctly", () => {
+  const firstDuration = new Duration(10);
+  const secondDuration = new Duration(20);
+  const thirdDuration = new Duration(30);
+  expect(firstDuration.after(firstDuration)).toBe(false);
+  expect(firstDuration.after(secondDuration)).toBe(false);
+  expect(firstDuration.after(thirdDuration)).toBe(false);
+  expect(secondDuration.after(firstDuration)).toBe(true);
+  expect(secondDuration.after(secondDuration)).toBe(false);
+  expect(secondDuration.after(thirdDuration)).toBe(false);
+  expect(thirdDuration.after(firstDuration)).toBe(true);
+  expect(thirdDuration.after(secondDuration)).toBe(true);
+  expect(thirdDuration.after(thirdDuration)).toBe(false);
+});
+
+Deno.test("`DayTime.forward` should add two durations correctly", () => {
+  const origin = DayTime.from(0, 0, 0, 0);
+  const forwardSecond = origin.forward(Duration.fromSecond(1));
+  const forwardMinute = origin.forward(Duration.fromMinute(1));
+  const forwardHour = origin.forward(Duration.fromHour(1));
+  const forwardDay = origin.forward(Duration.fromDay(1));
+
+  expect(forwardSecond.second).toBe(1);
+  expect(forwardSecond.minute).toBe(0);
+  expect(forwardSecond.hour).toBe(0);
+  expect(forwardSecond.day).toBe(0);
+  expect(forwardMinute.second).toBe(0);
+  expect(forwardMinute.minute).toBe(1);
+  expect(forwardMinute.hour).toBe(0);
+  expect(forwardMinute.day).toBe(0);
+  expect(forwardHour.second).toBe(0);
+  expect(forwardHour.minute).toBe(0);
+  expect(forwardHour.hour).toBe(1);
+  expect(forwardHour.day).toBe(0);
+  expect(forwardDay.second).toBe(0);
+  expect(forwardDay.minute).toBe(0);
+  expect(forwardDay.hour).toBe(0);
+  expect(forwardDay.day).toBe(1);
+});
+
+Deno.test("`DayTime.backward` should add two durations correctly", () => {
+  const origin = DayTime.from(0, 0, 0, 0);
+  const backwardSecond = origin.backward(Duration.fromSecond(1));
+  const backwardMinute = origin.backward(Duration.fromMinute(1));
+  const backwardHour = origin.backward(Duration.fromHour(1));
+  const backwardDay = origin.backward(Duration.fromDay(1));
+  const backwardWeek = origin.backward(Duration.fromWeek(1));
+
+  expect(backwardSecond.second).toBe(59);
+  expect(backwardSecond.minute).toBe(59);
+  expect(backwardSecond.hour).toBe(23);
+  expect(backwardSecond.day).toBe(6);
+  expect(backwardMinute.second).toBe(0);
+  expect(backwardMinute.minute).toBe(59);
+  expect(backwardMinute.hour).toBe(23);
+  expect(backwardMinute.day).toBe(6);
+  expect(backwardHour.second).toBe(0);
+  expect(backwardHour.minute).toBe(0);
+  expect(backwardHour.hour).toBe(23);
+  expect(backwardHour.day).toBe(6);
+  expect(backwardDay.second).toBe(0);
+  expect(backwardDay.minute).toBe(0);
+  expect(backwardDay.hour).toBe(0);
+  expect(backwardHour.day).toBe(6);
+  expect(backwardWeek.second).toBe(0);
+  expect(backwardWeek.minute).toBe(0);
+  expect(backwardWeek.hour).toBe(0);
+  expect(backwardWeek.day).toBe(0);
+});
+
+Deno.test("`DayTime.setDay` should only set the day correctly", () => {
+  const dt = DayTime.from(1, 1, 1, 1).setDay(2);
+  expect(dt.day).toEqual(2);
+  expect(dt.hour).toEqual(1);
+  expect(dt.minute).toEqual(1);
+  expect(dt.second).toEqual(1);
+});
+
+Deno.test("`DayTime.setHour` should only set the hour correctly", () => {
+  const dt = DayTime.from(1, 1, 1, 1).setHour(2);
+  expect(dt.day).toEqual(1);
+  expect(dt.hour).toEqual(2);
+  expect(dt.minute).toEqual(1);
+  expect(dt.second).toEqual(1);
+});
+
+Deno.test("`DayTime.setMinute` should only set the minute correctly", () => {
+  const dt = DayTime.from(1, 1, 1, 1).setMinute(2);
+  expect(dt.day).toEqual(1);
+  expect(dt.hour).toEqual(1);
+  expect(dt.minute).toEqual(2);
+  expect(dt.second).toEqual(1);
+});
+
+Deno.test("`DayTime.setSecond` should only set the second correctly", () => {
+  const dt = DayTime.from(1, 1, 1, 1).setSecond(2);
+  expect(dt.day).toEqual(1);
+  expect(dt.hour).toEqual(1);
+  expect(dt.minute).toEqual(1);
+  expect(dt.second).toEqual(2);
 });

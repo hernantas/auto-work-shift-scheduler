@@ -183,3 +183,87 @@ export class Duration implements Time {
     return this.timestamp > time.timestamp;
   }
 }
+
+export class DayTime implements Time {
+  public static from(
+    day: number,
+    hour: number,
+    minute: number,
+    second: number,
+  ): DayTime {
+    const duration = Duration.from(0, day, hour, minute, second);
+    return new DayTime(duration);
+  }
+
+  public static fromDay(value: number): DayTime {
+    return DayTime.from(value, 0, 0, 0);
+  }
+
+  public static fromHour(value: number): DayTime {
+    return DayTime.from(0, value, 0, 0);
+  }
+
+  public static fromMinute(value: number): DayTime {
+    return DayTime.from(0, 0, value, 0);
+  }
+
+  public static fromSecond(value: number): DayTime {
+    return DayTime.from(0, 0, 0, value);
+  }
+
+  public readonly day: number;
+  public readonly hour: number;
+  public readonly minute: number;
+  public readonly second: number;
+  public readonly timestamp: number;
+
+  public constructor(time: number | Duration) {
+    const value = getTimestamp(time);
+    const normalizedValue = getCircularNumber(value, Duration.SECONDS_IN_WEEK);
+    const duration = new Duration(normalizedValue);
+
+    this.day = duration.day;
+    this.hour = duration.hour;
+    this.minute = duration.minute;
+    this.second = duration.second;
+    this.timestamp = duration.timestamp;
+  }
+
+  public backward(time: number | Duration): DayTime {
+    const timestamp = getTimestamp(time);
+    return new DayTime(this.timestamp - timestamp);
+  }
+
+  public forward(time: number | Duration): DayTime {
+    const timestamp = getTimestamp(time);
+    return new DayTime(this.timestamp + timestamp);
+  }
+
+  public setDay(day: number): DayTime {
+    return DayTime.from(day, this.hour, this.minute, this.second);
+  }
+
+  public setHour(hour: number): DayTime {
+    return DayTime.from(this.day, hour, this.minute, this.second);
+  }
+
+  public setMinute(minute: number): DayTime {
+    return DayTime.from(this.day, this.hour, minute, this.second);
+  }
+
+  public setSecond(second: number): DayTime {
+    return DayTime.from(this.day, this.hour, this.minute, second);
+  }
+
+  public before(time: DayTime): boolean {
+    return this.timestamp < time.timestamp;
+  }
+
+  public equals(time: DayTime): boolean {
+    return this.timestamp === time.timestamp;
+  }
+
+  public after(time: DayTime): boolean {
+    return this.timestamp > time.timestamp;
+  }
+}
