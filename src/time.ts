@@ -216,17 +216,18 @@ export class DayTime implements Time {
   public readonly minute: number;
   public readonly second: number;
   public readonly timestamp: number;
+  public readonly duration: Duration;
 
   public constructor(time: number | Duration) {
     const value = getTimestamp(time);
     const normalizedValue = getCircularNumber(value, Duration.SECONDS_IN_WEEK);
-    const duration = new Duration(normalizedValue);
 
-    this.day = duration.day;
-    this.hour = duration.hour;
-    this.minute = duration.minute;
-    this.second = duration.second;
-    this.timestamp = duration.timestamp;
+    this.duration = new Duration(normalizedValue);
+    this.day = this.duration.day;
+    this.hour = this.duration.hour;
+    this.minute = this.duration.minute;
+    this.second = this.duration.second;
+    this.timestamp = this.duration.timestamp;
   }
 
   public backward(time: number | Duration): DayTime {
