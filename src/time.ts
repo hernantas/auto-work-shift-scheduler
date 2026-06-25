@@ -22,6 +22,15 @@ export class Day {
     return Day.all[nIndex];
   }
 
+  public static getRange(...indexes: number[]): Day[] {
+    return indexes.map((index) => Day.get(index));
+  }
+
+  public static getExcept(...indexes: number[]): Day[] {
+    const nIndexes = indexes.map((index) => getCircularNumber(index, Day.size));
+    return Day.all.filter((_, index) => !nIndexes.includes(index));
+  }
+
   private constructor(
     public readonly index: number,
     public readonly name: string,

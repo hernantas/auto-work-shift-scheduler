@@ -17,6 +17,22 @@ Deno.test("`Day.get` should return the correct day", () => {
   expect(outsideBeforeDay.name).toBe(Day.names[3]);
 });
 
+Deno.test("`Day.getRange` should return the correct days", () => {
+  const days = Day.getRange(0, 3, 6);
+  expect(days.length).toBe(3);
+  expect(days[0].index).toBe(0);
+  expect(days[1].index).toBe(3);
+  expect(days[2].index).toBe(6);
+});
+Deno.test("`Day.getExcept` should return the correct days", () => {
+  const days = Day.getExcept(0, 3, 6);
+  expect(days.length).toBe(4);
+  expect(days[0].index).toBe(1);
+  expect(days[1].index).toBe(2);
+  expect(days[2].index).toBe(4);
+  expect(days[3].index).toBe(5);
+});
+
 Deno.test("`Day.forward` should add the correct day", () => {
   const currentDay = Day.get(0);
   const forwardDay = currentDay.forward(3);
