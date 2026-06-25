@@ -11,3 +11,18 @@ export function zeroPad(value: number, length?: number) {
   const fulltext = leading + text;
   return fulltext.substring(leading.length + text.length - size);
 }
+
+export class MapSet<K, V> {
+  private readonly store: Map<K, Set<V>> = new Map();
+
+  public get(key: K): Set<V> {
+    const value = this.store.get(key);
+    if (value !== undefined) {
+      return value;
+    }
+
+    const newValue = new Set<V>();
+    this.store.set(key, newValue);
+    return newValue;
+  }
+}
