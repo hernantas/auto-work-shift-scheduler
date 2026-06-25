@@ -45,7 +45,7 @@ Deno.test("`TimeSlot` should generate several time slot over given days", () => 
   }
 });
 
-Deno.test("`AssignmentMap` should assign `Employee` to given `TimeSlot` if allowed", () => {
+Deno.test("`AssignmentMap`", async (t) => {
   const morningSlots = TimeSlot.generate(
     "morning-work-hour",
     Duration.fromHour(8),
@@ -68,18 +68,45 @@ Deno.test("`AssignmentMap` should assign `Employee` to given `TimeSlot` if allow
     ...nightSlots,
   );
 
-  const assignment = new AssignmentMap();
-  assignment.assign(allDayWorker, ...allSlots);
-  assignment.assign(morningWorker, ...allSlots);
-  assignment.assign(nightWorker, ...allSlots);
-  for (const slot of morningSlots) {
-    expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
-    expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(true);
-    expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(false);
-  }
-  for (const slot of nightSlots) {
-    expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
-    expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(false);
-    expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(true);
-  }
+  await t.step(
+    "should assign `Employee` to given `TimeSlot` if allowed",
+    () => {
+      const assignment = new AssignmentMap();
+      assignment.assign(allDayWorker, ...allSlots);
+      assignment.assign(morningWorker, ...allSlots);
+      assignment.assign(nightWorker, ...allSlots);
+      for (const slot of morningSlots) {
+        expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
+        expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(true);
+        expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(false);
+      }
+      for (const slot of nightSlots) {
+        expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
+        expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(false);
+        expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(true);
+      }
+    },
+  );
+
+  await t.step(
+    "should clone correctly",
+    () => {
+      const assignment = new AssignmentMap();
+      assignment.assign(allDayWorker, ...allSlots);
+      assignment.assign(morningWorker, ...allSlots);
+      assignment.assign(nightWorker, ...allSlots);
+      const cloned = assignment.clone();
+
+      for (const slot of morningSlots) {
+        expect(cloned.getByEmployee(allDayWorker).has(slot)).toBe(true);
+        expect(cloned.getByEmployee(morningWorker).has(slot)).toBe(true);
+        expect(cloned.getByEmployee(nightWorker).has(slot)).toBe(false);
+      }
+      for (const slot of nightSlots) {
+        expect(cloned.getByEmployee(allDayWorker).has(slot)).toBe(true);
+        expect(cloned.getByEmployee(morningWorker).has(slot)).toBe(false);
+        expect(cloned.getByEmployee(nightWorker).has(slot)).toBe(true);
+      }
+    },
+  );
 });

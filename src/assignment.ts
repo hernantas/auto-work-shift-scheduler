@@ -66,4 +66,12 @@ export class AssignmentMap {
     this.assignedTimeSlots.get(slot).delete(employee);
     return this;
   }
+
+  public clone(): AssignmentMap {
+    const newAssignments = new AssignmentMap();
+    for (const [employee, slots] of this.assignedEmployees.entries()) {
+      newAssignments.assign(employee, ...slots);
+    }
+    return newAssignments;
+  }
 }
