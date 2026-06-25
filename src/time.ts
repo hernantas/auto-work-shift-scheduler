@@ -17,7 +17,7 @@ export class Day {
     (name, index) => new Day(index, name),
   );
 
-  public static get(index: number) {
+  public static get(index: number): Day {
     const nIndex = getCircularNumber(index, Day.size);
     return Day.all[nIndex];
   }
