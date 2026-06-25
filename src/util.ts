@@ -3,13 +3,7 @@ export function getCircularNumber(index: number, size: number): number {
 }
 
 export function zeroPad(value: number, length?: number) {
-  const text = String(value);
-  const size = Math.max(text.length, length ?? 0);
-  const leading = Array.from(new Array(size).keys())
-    .map(() => "0")
-    .join("");
-  const fulltext = leading + text;
-  return fulltext.substring(leading.length + text.length - size);
+  return value.toString().padStart(length ?? 2, "0");
 }
 
 export class MapSet<K, V> {
