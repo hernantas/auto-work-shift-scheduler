@@ -25,4 +25,16 @@ export class MapSet<K, V> {
     this.store.set(key, newValue);
     return newValue;
   }
+
+  public keys(): IterableIterator<K> {
+    return this.store.keys();
+  }
+
+  public values(): IterableIterator<Set<V>> {
+    return this.store.values();
+  }
+
+  public entries(): IterableIterator<[K, Set<V>]> {
+    return this.store.entries();
+  }
 }
