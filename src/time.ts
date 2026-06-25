@@ -61,20 +61,20 @@ export type NumberSign = -1 | 0 | 1;
 export class Duration implements Time {
   public static readonly DAY_IN_WEEK: number = Day.size;
   public static readonly HOUR_IN_DAY: number = 24;
-  public static readonly HOUR_IN_WEEK: number =
-    Duration.DAY_IN_WEEK * Duration.HOUR_IN_DAY;
+  public static readonly HOUR_IN_WEEK: number = Duration.DAY_IN_WEEK *
+    Duration.HOUR_IN_DAY;
   public static readonly MINUTES_IN_HOUR: number = 60;
-  public static readonly MINUTES_IN_DAY: number =
-    Duration.HOUR_IN_DAY * Duration.MINUTES_IN_HOUR;
-  public static readonly MINUTES_IN_WEEK: number =
-    Duration.HOUR_IN_WEEK * Duration.MINUTES_IN_HOUR;
+  public static readonly MINUTES_IN_DAY: number = Duration.HOUR_IN_DAY *
+    Duration.MINUTES_IN_HOUR;
+  public static readonly MINUTES_IN_WEEK: number = Duration.HOUR_IN_WEEK *
+    Duration.MINUTES_IN_HOUR;
   public static readonly SECONDS_IN_MINUTE: number = 60;
-  public static readonly SECONDS_IN_HOUR: number =
-    Duration.MINUTES_IN_HOUR * Duration.SECONDS_IN_MINUTE;
-  public static readonly SECONDS_IN_DAY: number =
-    Duration.MINUTES_IN_DAY * Duration.SECONDS_IN_MINUTE;
-  public static readonly SECONDS_IN_WEEK: number =
-    Duration.MINUTES_IN_WEEK * Duration.SECONDS_IN_MINUTE;
+  public static readonly SECONDS_IN_HOUR: number = Duration.MINUTES_IN_HOUR *
+    Duration.SECONDS_IN_MINUTE;
+  public static readonly SECONDS_IN_DAY: number = Duration.MINUTES_IN_DAY *
+    Duration.SECONDS_IN_MINUTE;
+  public static readonly SECONDS_IN_WEEK: number = Duration.MINUTES_IN_WEEK *
+    Duration.SECONDS_IN_MINUTE;
 
   public static readonly origin = new Duration(0);
 
@@ -134,10 +134,9 @@ export class Duration implements Time {
     this.hour =
       Math.floor((value % Duration.SECONDS_IN_DAY) / Duration.SECONDS_IN_HOUR) *
       this.sign;
-    this.minute =
-      Math.floor(
-        (value % Duration.SECONDS_IN_HOUR) / Duration.SECONDS_IN_MINUTE,
-      ) * this.sign;
+    this.minute = Math.floor(
+      (value % Duration.SECONDS_IN_HOUR) / Duration.SECONDS_IN_MINUTE,
+    ) * this.sign;
     this.second = Math.floor(value % Duration.SECONDS_IN_MINUTE) * this.sign;
   }
 
