@@ -1,4 +1,5 @@
 import { Day, DayTime, Duration } from "./time.ts";
+import { MapSet } from "./util.ts";
 
 export class TimeSlot {
   public static generate(
@@ -24,5 +25,45 @@ export class TimeSlot {
       ? new Duration(duration)
       : duration;
     this.end = this.start.forward(duration);
+  }
+}
+
+export class Employee {
+  public readonly allowedSlots: Set<TimeSlot>;
+
+  public constructor(
+    public readonly name: string,
+    ...allowedSlots: TimeSlot[]
+  ) {
+    this.allowedSlots = new Set(allowedSlots);
+  }
+}
+
+export class AssignmentMap {
+  private readonly assignedEmployees: MapSet<Employee, TimeSlot> = new MapSet();
+  private readonly assignedTimeSlots: MapSet<TimeSlot, Employee> = new MapSet();
+
+  public getByEmployee(employee: Employee): Set<TimeSlot> {
+    return this.assignedEmployees.get(employee);
+  }
+
+  public getByTimeSlot(slot: TimeSlot): Set<Employee> {
+    return this.assignedTimeSlots.get(slot);
+  }
+
+  public assign(employee: Employee, ...slots: TimeSlot[]): this {
+    for (const slot of slots) {
+      if (employee.allowedSlots.has(slot)) {
+        this.assignedEmployees.get(employee).add(slot);
+        this.assignedTimeSlots.get(slot).add(employee);
+      }
+    }
+    return this;
+  }
+
+  public unassign(employee: Employee, slot: TimeSlot): this {
+    this.assignedEmployees.get(employee).delete(slot);
+    this.assignedTimeSlots.get(slot).delete(employee);
+    return this;
   }
 }

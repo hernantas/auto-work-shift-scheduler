@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { TimeSlot } from "./assignment.ts";
+import { AssignmentMap, Employee, TimeSlot } from "./assignment.ts";
 import { Day, DayTime, Duration } from "./time.ts";
 
 Deno.test("`TimeSlot` should generate correct end time based on start time and duration", () => {
@@ -42,5 +42,44 @@ Deno.test("`TimeSlot` should generate several time slot over given days", () => 
     expect(slot.end.hour).toBe(17);
     expect(slot.end.minute).toBe(0);
     expect(slot.end.second).toBe(0);
+  }
+});
+
+Deno.test("`AssignmentMap` should assign `Employee` to given `TimeSlot` if allowed", () => {
+  const morningSlots = TimeSlot.generate(
+    "morning-work-hour",
+    Duration.fromHour(8),
+    Duration.fromHour(9),
+    Day.all,
+  );
+  const nightSlots = TimeSlot.generate(
+    "night-work-hour",
+    Duration.fromHour(15),
+    Duration.fromHour(9),
+    Day.all,
+  );
+  const allSlots = [...morningSlots, ...nightSlots];
+
+  const morningWorker = new Employee("morning-worker", ...morningSlots);
+  const nightWorker = new Employee("night-worker", ...nightSlots);
+  const allDayWorker = new Employee(
+    "all-day-worker",
+    ...morningSlots,
+    ...nightSlots,
+  );
+
+  const assignment = new AssignmentMap();
+  assignment.assign(allDayWorker, ...allSlots);
+  assignment.assign(morningWorker, ...allSlots);
+  assignment.assign(nightWorker, ...allSlots);
+  for (const slot of morningSlots) {
+    expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
+    expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(true);
+    expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(false);
+  }
+  for (const slot of nightSlots) {
+    expect(assignment.getByEmployee(allDayWorker).has(slot)).toBe(true);
+    expect(assignment.getByEmployee(morningWorker).has(slot)).toBe(false);
+    expect(assignment.getByEmployee(nightWorker).has(slot)).toBe(true);
   }
 });
