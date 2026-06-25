@@ -1,7 +1,6 @@
 import { expect } from "@std/expect";
 import { TimeSlot } from "./assignment.ts";
 import { Day, DayTime, Duration } from "./time.ts";
-import { isWindows } from "jsr:@std/internal@^1.0.14/os";
 
 Deno.test("`TimeSlot` should generate correct end time based on start time and duration", () => {
   const slotDay = new TimeSlot(
