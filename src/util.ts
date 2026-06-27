@@ -6,29 +6,40 @@ export function zeroPad(value: number, length?: number) {
   return value.toString().padStart(length ?? 2, "0");
 }
 
-export class MapSet<K, V> {
-  private readonly store: Map<K, Set<V>> = new Map();
+export class SafeMap<K, V> {
+  private store: Map<K, V> = new Map();
 
-  public get(key: K): Set<V> {
+  public constructor(private readonly createDefault: () => V) {}
+
+  public get(key: K): V {
     const value = this.store.get(key);
     if (value !== undefined) {
       return value;
     }
+    const defaultValue = this.createDefault();
+    this.store.set(key, defaultValue);
+    return defaultValue;
+  }
 
-    const newValue = new Set<V>();
-    this.store.set(key, newValue);
-    return newValue;
+  public set(key: K, value: V): void {
+    this.store.set(key, value);
   }
 
   public keys(): IterableIterator<K> {
     return this.store.keys();
   }
 
-  public values(): IterableIterator<Set<V>> {
+  public values(): IterableIterator<V> {
     return this.store.values();
   }
 
-  public entries(): IterableIterator<[K, Set<V>]> {
+  public entries(): IterableIterator<[K, V]> {
     return this.store.entries();
+  }
+}
+
+export class MapSet<K, V> extends SafeMap<K, Set<V>> {
+  public constructor() {
+    super(() => new Set<V>());
   }
 }
