@@ -26,6 +26,15 @@ export class TimeSlot {
       : duration;
     this.end = this.start.forward(duration);
   }
+
+  public inRange(time: DayTime): boolean {
+    if (this.start.after(this.end)) {
+      return (this.start.before(time) || this.start.equals(time)) ||
+        (this.end.after(time) || this.end.equals(time));
+    }
+    return (this.start.before(time) || this.start.equals(time)) &&
+      (this.end.after(time) || this.end.equals(time));
+  }
 }
 
 export class Employee {

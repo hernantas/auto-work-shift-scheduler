@@ -45,6 +45,34 @@ Deno.test("`TimeSlot` should generate several time slot over given days", () => 
   }
 });
 
+Deno.test("`TimeSlot` should return true if given time is within the slot", () => {
+  const slot = new TimeSlot(
+    "working-day",
+    DayTime.from(0, 0, 0, 0),
+    Duration.fromDay(1),
+  );
+  expect(slot.inRange(DayTime.from(0, 0, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(0, 12, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(1, 0, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(1, 1, 0, 0))).toBe(false);
+  expect(slot.inRange(DayTime.from(-1, 0, 0, 0))).toBe(false);
+});
+
+Deno.test("`TimeSlot` should return true if given time is within the slot even if slot is circular", () => {
+  const slot = new TimeSlot(
+    "working-day",
+    DayTime.from(6, 0, 0, 0),
+    Duration.fromDay(2),
+  );
+  expect(slot.inRange(DayTime.from(0, 0, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(0, 12, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(1, 0, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(-1, 0, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(-1, 1, 0, 0))).toBe(true);
+  expect(slot.inRange(DayTime.from(1, 1, 0, 0))).toBe(false);
+  expect(slot.inRange(DayTime.from(-1, -1, 0, 0))).toBe(false);
+});
+
 Deno.test("`AssignmentMap`", async (t) => {
   const morningSlots = TimeSlot.generate(
     "morning-work-hour",
