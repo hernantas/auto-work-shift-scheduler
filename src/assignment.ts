@@ -1,5 +1,5 @@
 import { Day, DayTime, Duration } from "./time.ts";
-import { MapSet } from "./util.ts";
+import { MapSet, SafeMap } from "./util.ts";
 
 export class TimeSlot {
   public static generate(
@@ -82,5 +82,23 @@ export class AssignmentMap {
       newAssignments.assign(employee, ...slots);
     }
     return newAssignments;
+  }
+}
+
+export class AssignmentHashMap
+  extends SafeMap<TimeSlot, SafeMap<Employee, bigint>> {
+  public constructor(slots: TimeSlot[], employees: Employee[]) {
+    super(() => new SafeMap(() => 0n));
+
+    const numbers = new BigUint64Array(slots.length * employees.length);
+    crypto.getRandomValues(numbers);
+    for (let i = 0; i < slots.length; i++) {
+      for (let j = 0; j < employees.length; j++) {
+        this.get(slots[i]).set(
+          employees[j],
+          numbers[(i * employees.length) + j],
+        );
+      }
+    }
   }
 }

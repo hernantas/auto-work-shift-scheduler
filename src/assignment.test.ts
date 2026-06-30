@@ -1,5 +1,10 @@
 import { expect } from "@std/expect";
-import { AssignmentMap, Employee, TimeSlot } from "./assignment.ts";
+import {
+  AssignmentHashMap,
+  AssignmentMap,
+  Employee,
+  TimeSlot,
+} from "./assignment.ts";
 import { Day, DayTime, Duration } from "./time.ts";
 
 Deno.test("`TimeSlot` should generate correct end time based on start time and duration", () => {
@@ -137,4 +142,27 @@ Deno.test("`AssignmentMap`", async (t) => {
       }
     },
   );
+});
+
+Deno.test("`AssignmentHashMap` should generate unique value for each `TimeSlot` and employee combination", () => {
+  const slots = TimeSlot.generate(
+    "test",
+    Duration.fromHour(9),
+    Duration.fromHour(8),
+    Day.all,
+  );
+  const worker1 = new Employee("worker-1", ...slots);
+  const worker2 = new Employee("worker-2", ...slots);
+  const workers = [worker1, worker2];
+
+  const hashMap = new AssignmentHashMap(slots, workers);
+  const uniqueHashes = new Set<bigint>();
+  for (const slot of slots) {
+    for (const worker of workers) {
+      const hash = hashMap.get(slot).get(worker);
+      expect(hash).not.toEqual(0n);
+      expect(uniqueHashes.has(hash)).toBe(false);
+      uniqueHashes.add(hash);
+    }
+  }
 });
