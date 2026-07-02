@@ -102,3 +102,27 @@ export class AssignmentHashMap
     }
   }
 }
+
+export class HashStore {
+  private static readonly TABLE_SIZE = 1 << 24;
+  private readonly table = new BigUint64Array(HashStore.TABLE_SIZE);
+
+  public has(hash: bigint): boolean {
+    const index = this.getIndex(hash);
+    return this.table[index] === hash;
+  }
+
+  public add(hash: bigint): boolean {
+    const index = this.getIndex(hash);
+    if (this.table[index] !== hash) {
+      // new hash
+      this.table[index] = hash;
+      return true;
+    }
+    return false;
+  }
+
+  private getIndex(hash: bigint): number {
+    return Number(hash & BigInt(HashStore.TABLE_SIZE - 1));
+  }
+}

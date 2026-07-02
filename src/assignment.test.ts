@@ -3,6 +3,7 @@ import {
   AssignmentHashMap,
   AssignmentMap,
   Employee,
+  HashStore,
   TimeSlot,
 } from "./assignment.ts";
 import { Day, DayTime, Duration } from "./time.ts";
@@ -165,4 +166,12 @@ Deno.test("`AssignmentHashMap` should generate unique value for each `TimeSlot` 
       uniqueHashes.add(hash);
     }
   }
+});
+
+Deno.test("`HashStore` should store and retrieve hashes correctly", () => {
+  const store = new HashStore();
+  const hash = 42n;
+  expect(store.has(hash)).toBe(false);
+  store.add(hash);
+  expect(store.has(hash)).toBe(true);
 });
