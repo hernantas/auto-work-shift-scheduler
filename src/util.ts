@@ -6,6 +6,14 @@ export function zeroPad(value: number, length?: number) {
   return value.toString().padStart(length ?? 2, "0");
 }
 
+export function sum(...values: number[]): number {
+  let total = 0;
+  for (const value of values) {
+    total += value;
+  }
+  return total;
+}
+
 export class SafeMap<K, V> {
   private store: Map<K, V> = new Map();
 
