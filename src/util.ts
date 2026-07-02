@@ -14,6 +14,10 @@ export function sum(...values: number[]): number {
   return total;
 }
 
+export function avg(...values: number[]): number {
+  return sum(...values) / values.length;
+}
+
 export class SafeMap<K, V> {
   private store: Map<K, V> = new Map();
 

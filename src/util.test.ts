@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { getCircularNumber, SafeMap, sum, zeroPad } from "./util.ts";
+import { avg, getCircularNumber, SafeMap, sum, zeroPad } from "./util.ts";
 
 Deno.test("`getCircularNumber` within range should return same value", () => {
   const valueMin = getCircularNumber(0, 10);
@@ -57,6 +57,11 @@ Deno.test(
 Deno.test("`sum` should return the sum of all values", () => {
   const result = sum(1, 2, 3, 4, 5);
   expect(result).toBe(15);
+});
+
+Deno.test("`avg` should return the average of all values", () => {
+  const result = avg(1, 2, 3, 4, 5);
+  expect(result).toBe(3);
 });
 
 Deno.test("`SafeMap` should return default value when given unknown key", () => {
