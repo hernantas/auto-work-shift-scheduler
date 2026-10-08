@@ -23,6 +23,8 @@ namespace Scheduler.Time
 
         public static Duration OfDay(int day) => new Duration(day * SECOND_IN_DAY);
 
+        public static Duration OfDay(Day day) => new Duration(day.Index * SECOND_IN_DAY);
+
         public static Duration OfWeek(int week) => new Duration(week * SECOND_IN_WEEK);
 
         public int Timestamp { get; }
