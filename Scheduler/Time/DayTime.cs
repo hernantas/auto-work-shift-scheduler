@@ -30,7 +30,7 @@ namespace Scheduler.Time
         public DayTime(int timestamp)
         {
             int normalisedTimestamp = CircularNumber.Get(timestamp, Duration.SECOND_IN_WEEK);
-            this.Duration = new Duration(normalisedTimestamp);
+            Duration = new Duration(normalisedTimestamp);
         }
 
         public DayTime Add(Duration duration)
