@@ -41,5 +41,9 @@ namespace Scheduler.Time
             Day = Day.Get(timestamp / SECOND_IN_DAY);
             Week = timestamp / SECOND_IN_WEEK;
         }
+
+        public Duration Add(Duration duration) => new Duration(Timestamp + duration.Timestamp);
+
+        public Duration Subtract(Duration duration) => new Duration(Timestamp - duration.Timestamp);
     }
 }

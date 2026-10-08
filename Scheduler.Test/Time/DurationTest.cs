@@ -28,5 +28,35 @@ namespace Scheduler.Test.Time
             Assert.Equal(expectedDay, duration.Day.Index);
             Assert.Equal(expectedWeek, duration.Week);
         }
+
+        [Theory]
+        [InlineData(3600, 1800, 5400)]
+        [InlineData(1800, 3600, 5400)]
+        public void Add_ShouldReturnCorrectDuration(
+            int timestamp1,
+            int timestamp2,
+            int expectedTimestamp
+        )
+        {
+            var duration1 = new Duration(timestamp1);
+            var duration2 = new Duration(timestamp2);
+            var result = duration1.Add(duration2);
+            Assert.Equal(expectedTimestamp, result.Timestamp);
+        }
+
+        [Theory]
+        [InlineData(5400, 1800, 3600)]
+        [InlineData(3600, 1800, 1800)]
+        public void Subtract_ShouldReturnCorrectDuration(
+            int timestamp1,
+            int timestamp2,
+            int expectedTimestamp
+        )
+        {
+            var duration1 = new Duration(timestamp1);
+            var duration2 = new Duration(timestamp2);
+            var result = duration1.Subtract(duration2);
+            Assert.Equal(expectedTimestamp, result.Timestamp);
+        }
     }
 }
