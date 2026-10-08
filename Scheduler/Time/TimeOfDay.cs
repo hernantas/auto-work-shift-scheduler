@@ -28,5 +28,8 @@ namespace Scheduler.Time
             int normalisedTimestamp = CircularNumber.Get(timestamp, Duration.SECOND_IN_DAY);
             Duration = new Duration(normalisedTimestamp);
         }
+
+        public TimeOfDay(Duration duration)
+            : this(duration.Timestamp) { }
     }
 }

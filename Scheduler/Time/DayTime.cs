@@ -33,6 +33,9 @@ namespace Scheduler.Time
             Duration = new Duration(normalisedTimestamp);
         }
 
+        public DayTime(Duration duration)
+            : this(duration.Timestamp) { }
+
         public DayTime Add(Duration duration)
         {
             return new DayTime(Duration.Timestamp + duration.Timestamp);
