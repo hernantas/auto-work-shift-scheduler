@@ -44,8 +44,12 @@ namespace Scheduler.Time
             Week = timestamp / SECOND_IN_WEEK;
         }
 
-        public Duration Add(Duration duration) => new Duration(Timestamp + duration.Timestamp);
+        public Duration Add(Duration duration) => Add(duration.Timestamp);
 
-        public Duration Subtract(Duration duration) => new Duration(Timestamp - duration.Timestamp);
+        public Duration Add(int timestamp) => new Duration(Timestamp + timestamp);
+
+        public Duration Subtract(Duration duration) => Subtract(duration.Timestamp);
+
+        public Duration Subtract(int timestamp) => new Duration(Timestamp - timestamp);
     }
 }
