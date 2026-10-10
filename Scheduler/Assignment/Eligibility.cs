@@ -14,6 +14,11 @@ namespace Scheduler.Assignment
         public Employee[] this[TimeSlot slot] => slots[slot].ToArray();
         public TimeSlot[] this[Employee employee] => employees[employee].ToArray();
 
+        public bool IsEligible(TimeSlot slot, Employee employee)
+        {
+            return slots[slot].Contains(employee);
+        }
+
         public void Assign(TimeSlot slot, params Employee[] employees)
         {
             foreach (var employee in employees)

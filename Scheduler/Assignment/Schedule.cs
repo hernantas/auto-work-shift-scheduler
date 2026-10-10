@@ -22,7 +22,7 @@ namespace Scheduler.Assignment
 
         public void Assign(TimeSlot slot, Employee employee)
         {
-            if (eligibility[slot].Contains(employee))
+            if (eligibility.IsEligible(slot, employee))
             {
                 slots[slot].Add(employee);
                 employees[employee].Add(slot);
