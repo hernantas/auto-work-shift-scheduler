@@ -120,5 +120,19 @@ namespace Scheduler.Assignment
                 }
             }
         }
+
+        public Schedule Clone()
+        {
+            var newInstance = new Schedule(eligibility);
+            foreach (var kv in slots)
+            {
+                var slot = kv.Key;
+                foreach (var employee in kv.Value)
+                {
+                    newInstance.Assign(slot, employee);
+                }
+            }
+            return newInstance;
+        }
     }
 }
