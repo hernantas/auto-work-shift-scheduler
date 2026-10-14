@@ -6,11 +6,11 @@ namespace Scheduler.Solver
 {
     public class HashTable
     {
-        private readonly SafeDictionary<TimeSlot, SafeDictionary<Employee, uint>> tables = new(
-            slot => new(employee => 0u)
+        private readonly SafeDictionary<TimeSlot, SafeDictionary<Employee, Hash>> tables = new(
+            slot => new(employee => new Hash())
         );
 
-        public uint this[TimeSlot slot, Employee employee]
+        public Hash this[TimeSlot slot, Employee employee]
         {
             get => tables[slot][employee];
         }
@@ -24,7 +24,8 @@ namespace Scheduler.Solver
                     var slot = slots[i];
                     var employee = employees[j];
                     var bytes = RandomNumberGenerator.GetBytes(4);
-                    var hash = BitConverter.ToUInt32(bytes);
+                    var number = BitConverter.ToUInt32(bytes);
+                    var hash = new Hash(number);
                     tables[slot][employee] = hash;
                 }
             }

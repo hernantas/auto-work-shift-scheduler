@@ -37,9 +37,10 @@ namespace Scheduler.Test.Solver
         [InlineData(1608566710)]
         [InlineData(1783586141)]
         [InlineData(3283871532)]
-        public void Add_AddingHashes_ReturnsTrueAtFristThenFalse(uint hash)
+        public void Add_AddingHashes_ReturnsTrueAtFristThenFalse(uint number)
         {
             var bitset = new HashBitSet();
+            var hash = new Hash(number);
             Assert.True(bitset.Add(hash));
             Assert.False(bitset.Add(hash));
         }
